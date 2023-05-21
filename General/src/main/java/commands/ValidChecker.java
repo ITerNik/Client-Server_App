@@ -1,7 +1,9 @@
 package commands;
 
 
+import java.io.Serializable;
+
 @FunctionalInterface
-public interface ValidChecker {
-    void check(String[] param);
+public interface ValidChecker extends Serializable {
+    void check(String param);
 }

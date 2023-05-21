@@ -3,13 +3,15 @@ package commands;
 import constants.Messages;
 import logic.Manager;
 
+import java.io.Serializable;
+
 /**
  * Абстрактный класс реализующий интерфейс Command и определяющий базовое поведение команд.
  * Здесь определены методы чтения и установки аргументов.
  * Все команды наследуются от этого класса и переопределяют исполнение в соответствии с требованиями.
  */
 public abstract class AbstractCommand implements Command {
-    protected ArgumentParser parser;
+    protected ArgumentParser parser = new ArgumentParser();
     protected Manager manager;
 
     public AbstractCommand() {
@@ -37,22 +39,21 @@ public abstract class AbstractCommand implements Command {
      * Устанавливает количество аргументов, требуемых команде для последующей проверки
      * с помощью {@link ValidChecker} и считывания {@link ValidChecker}
      *
-     * @param names набор строк которые будут выводиться при вызове команды help
+     * @param name набор строк которые будут выводиться при вызове команды help
      * @see #argumentsInfo()
      */
-    protected void setParameterNames(String... names) {
-        parser.setParameters(names);
+    protected void setParameterName(String name) {
+        parser.setParameter(name);
     }
 
     /**
      * Устанавливает количество экземпляров, требуемых команде для считывания и исполнения.
      * Задает количество скобок {element} выводимых help
      *
-     * @param number количество считываемых элементов коллекции
      * @see #argumentsInfo()
      */
-    protected void setElements(Class<?> type, int number) {
-        parser.setElements(type, number);
+    protected void setElement(Class<?> type) {
+        parser.setElement(type);
     }
 
     public ArgumentParser getParser() {
@@ -71,17 +72,7 @@ public abstract class AbstractCommand implements Command {
 
     @Override
     public String argumentsInfo() {
-        String[] parameters = parser.getParameters();
-        Object[] elements = getParser().getElements();
-        StringBuilder res = new StringBuilder();
-        if (parameters != null) {
-            for (String param : parameters) {
-                res.append(" ").append(param);
-            }
-        }
-        if (elements != null) {
-            res.append(String.format(" {%s}", parser.getType().getSimpleName()).repeat((elements.length)));
-        }
-        return res.toString();
+        String parameter = parser.getParameter();
+        return " " + parameter + " {" + parser.getElement().getClass().getSimpleName() + "}";
     }
 }

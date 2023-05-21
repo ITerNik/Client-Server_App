@@ -4,7 +4,9 @@ import annotations.Builder;
 import constants.Messages;
 import exceptions.BadParametersException;
 
-public class Location implements Comparable<Location> {
+import java.io.Serializable;
+
+public class Location implements Comparable<Location>, Serializable {
     private long x;
     private Double y; //Поле не может быть null
     private float z;

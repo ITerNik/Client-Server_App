@@ -4,7 +4,9 @@ import annotations.Builder;
 import constants.Messages;
 import exceptions.BadParametersException;
 
-public class Coordinates implements Comparable<Coordinates> {
+import java.io.Serializable;
+
+public class Coordinates implements Comparable<Coordinates>, Serializable {
     private Double x; //Поле не может быть null
     private Integer y; //Значение поля должно быть больше -663, Поле не может быть null
 

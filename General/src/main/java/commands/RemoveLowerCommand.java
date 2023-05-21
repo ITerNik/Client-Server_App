@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class RemoveLowerCommand extends AbstractCommand {
     private ArrayList<String> removed;
     public RemoveLowerCommand() {
-        setElements(Person.class, 1);
+        setElement(Person.class);
     }
     public RemoveLowerCommand(Manager manager) {
         this();
@@ -19,7 +19,7 @@ public class RemoveLowerCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        removed = manager.removeLower((Person) parser.getElements()[0]);
+        removed = manager.removeLower((Person) parser.getElement());
     }
 
     @Override

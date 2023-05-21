@@ -1,9 +1,8 @@
 package commands;
 
-import exceptions.BadParametersException;
-import logic.Query;
+import java.io.Serializable;
 
-public interface Command {
+public interface Command extends Serializable {
     /**
      * Исполнение команды. Переопределяется в классах наследниках
      */

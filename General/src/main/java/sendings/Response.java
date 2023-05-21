@@ -1,8 +1,10 @@
-package response;
+package sendings;
 
 import constants.Messages;
 
-public class Response {
+import java.io.*;
+
+public class Response implements Serializable {
     private Response(String message) {
         this.report = message;
     }
@@ -16,5 +18,12 @@ public class Response {
     }
     public String getReport() {
         return report;
+    }
+
+    public byte[] getBytes() throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(this);
+        return baos.toByteArray();
     }
 }

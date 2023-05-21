@@ -4,9 +4,10 @@ import annotations.Builder;
 import constants.Messages;
 import exceptions.BadParametersException;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Person implements Comparable<Person> {
+public class Person implements Comparable<Person>, Serializable {
     private int id;
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null

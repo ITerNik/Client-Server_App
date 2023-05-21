@@ -6,6 +6,7 @@ import elements.Person;
 import exceptions.BadParametersException;
 import exceptions.NonUniqueIdException;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -34,7 +35,7 @@ public class CollectionManager implements Manager {
         }
     }
 
-    public class DependentSet<T extends Comparable<T>> {
+    public class DependentSet<T extends Comparable<T>> implements Serializable {
         private final TreeSet<T> unique = new TreeSet<>();
 
         public boolean add(T value) {

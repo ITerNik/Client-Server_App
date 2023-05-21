@@ -2,7 +2,9 @@ package elements;
 
 import constants.Messages;
 
-public enum EyeColor {
+import java.io.Serializable;
+
+public enum EyeColor implements Serializable {
     GREEN,
     RED,
     BLACK,

@@ -8,7 +8,7 @@ import logic.Manager;
 public class GreaterLocationCommand extends AbstractCommand {
     private int count;
     public GreaterLocationCommand() {
-        setElements(Location.class, 1);
+        setElement(Location.class);
     }
 
     public GreaterLocationCommand(Manager manager) {
@@ -18,7 +18,7 @@ public class GreaterLocationCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        count = manager.countGreaterThanLocation((Location) parser.getElements()[0]);
+        count = manager.countGreaterThanLocation((Location) parser.getElement());
     }
 
     @Override

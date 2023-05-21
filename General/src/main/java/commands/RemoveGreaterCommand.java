@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class RemoveGreaterCommand extends AbstractCommand {
     private ArrayList<String> removed;
     public RemoveGreaterCommand() {
-        setParameterNames("key");
+        setParameterName("key");
     }
     public RemoveGreaterCommand(Manager manager) {
         this();
@@ -18,7 +18,7 @@ public class RemoveGreaterCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        removed = manager.removeGreater(parser.getParameters()[0]);
+        removed = manager.removeGreater(parser.getParameter());
     }
 
     @Override

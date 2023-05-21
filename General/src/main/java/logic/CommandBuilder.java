@@ -1,12 +1,15 @@
 package logic;
 
 import commands.*;
+import sendings.Query;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class CommandBuilder {
     private final HashMap<String, Command> commandList = new HashMap<>();
+    private final HashMap<String, ArgumentParser> commandInfo = new HashMap<>();
     private ArrayList<String> fileHistory;
     private final Manager manager;
 
@@ -23,7 +26,9 @@ public class CommandBuilder {
 
     public void addCommand(Command... commands) {
         for (Command command : commands) {
-            commandList.put(command.getName(), command);
+            String commandName = command.getName();
+            commandList.put(commandName, command);
+            commandInfo.put(commandName, command.getParser());
         }
     }
 
@@ -46,5 +51,8 @@ public class CommandBuilder {
             return true;
         }
         return false;
+    }
+    public HashMap<String, ArgumentParser> getArguments() {
+        return commandInfo;
     }
 }

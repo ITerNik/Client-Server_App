@@ -3,10 +3,11 @@ package logic;
 import elements.Location;
 import elements.Person;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public interface Manager {
+public interface Manager extends Serializable {
     boolean containsKey(String s);
 
     void put(String parameter, Person element);

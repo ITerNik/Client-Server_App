@@ -2,7 +2,9 @@ package elements;
 
 import constants.Messages;
 
-public enum HairColor {
+import java.io.Serializable;
+
+public enum HairColor implements Serializable {
     ORANGE,
     WHITE,
     BROWN;

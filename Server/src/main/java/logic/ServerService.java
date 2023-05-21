@@ -1,80 +1,154 @@
 package logic;
 
+
 import commands.Command;
-import response.Response;
+import constants.Messages;
+import exceptions.NonUniqueIdException;
+import exceptions.StartingProblemException;
+import sendings.Response;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.nio.channels.Channels;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.nio.ByteBuffer;
+import java.nio.channels.*;
 import java.util.ArrayDeque;
+import java.util.HashMap;
 import java.util.Queue;
+import java.util.Set;
 
-public class ServerService implements Service{
-    ServerSocketChannel socketChannel;
-    SocketChannel client;
-    ObjectInputStream ois;
-    ObjectOutputStream oos;
+public class ServerService implements Service {
+    ServerSocketChannel ssChannel;
+    Selector selector;
     CommandBuilder builder;
     Manager manager;
     JsonHandler handler;
     Queue<Command> history = new ArrayDeque<>();
 
-    public ServerService(Manager manager, JsonHandler handler) {
-        this.manager = manager;
+    public ServerService(JsonHandler handler) throws StartingProblemException, NonUniqueIdException {
         this.handler = handler;
+        this.manager = new CollectionManager(handler.readCollection());
         this.builder = new CommandBuilder(manager);
     }
 
-    public boolean setConnection() {
-        try {
-            socketChannel = ServerSocketChannel.open()
-                    .bind(new InetSocketAddress(54738));
-            client = socketChannel.accept();
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
+    public void setConnection() {
+
     }
 
-    public Query getQuery() {
-        try {
-            ois = new ObjectInputStream(Channels.newInputStream(client));
-            Query res = (Query) ois.readObject();
-            if (res.getCommandName().equals("exit")) return null;
-            else return res;
-        } catch (IOException | ClassNotFoundException e) {
-            return null;
+    private void getQuery(SelectionKey key) throws IOException, ClassNotFoundException {
+        SocketChannel client = (SocketChannel) key.channel();
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        int bytesRead;
+        while ((bytesRead = client.read(buffer)) > 0) {
+            buffer.flip();
+            byte[] bytes = new byte[bytesRead];
+            buffer.get(bytes);
+            baos.write(bytes);
+            buffer.clear();
         }
+        ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+        ObjectInputStream ois = new ObjectInputStream(bais);
+        System.out.println("Received");
+        key.attach(ois.readObject());
+        key.interestOps(SelectionKey.OP_WRITE);
     }
 
-    public void sendResponse(String message) {
-        try {
-            oos = new ObjectOutputStream(Channels.newOutputStream(client));
-            oos.writeObject(Response.ok(message));
-        } catch (IOException e) {
-            //...
-        }
+    private void sendResponse(SelectionKey key) throws IOException {
+        SocketChannel client = (SocketChannel) key.channel();
+        Response response = Response.ok("OK");
+        byte[] responseBytes = response.getBytes();
+        ByteBuffer buff = ByteBuffer.allocate(responseBytes.length);
+        buff.put(responseBytes);
+        buff.flip();
+        client.write(buff);
+        System.out.println("Response sent");
+        key.cancel();
+    }
+    private void sendInfo(SelectionKey key) throws IOException {
+        SocketChannel client = (SocketChannel) key.channel();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(key.attachment());
+        oos.flush();
+        byte[] argumentsBytes = baos.toByteArray();
+        ByteBuffer buff = ByteBuffer.allocate(argumentsBytes.length);
+        buff.flip();
+
+        client.write(buff);
+        System.out.println("Info sent");
+        key.interestOps(SelectionKey.OP_READ);
+    }
+    private void acceptConnection(SelectionKey key) throws IOException {
+        ServerSocketChannel serverChannel = (ServerSocketChannel) key.channel();
+        SocketChannel clientChannel = serverChannel.accept();
+        clientChannel.configureBlocking(false);
+
+        clientChannel.register(selector, SelectionKey.OP_WRITE, builder.getArguments());
     }
 
+    private void closeConnection() {
+        System.out.println("Closing server");
+        if (selector != null) {
+            try {
+                selector.close();
+                ssChannel.socket().close();
+                ssChannel.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     private void logCommand(Command command) {
         if (history.size() >= 8) {
             history.remove();
         }
         history.add(command);
     }
+
     public void run() {
-        setConnection();
-        while (true) {
-            Query query = getQuery();
-            if (query == null) break;
-            Command curr = builder.build(query);
-            curr.execute();
-            sendResponse(curr.getReport());
-            logCommand(curr);
+        System.out.println("Starting server...");
+        try {
+            ssChannel = ServerSocketChannel.open();
+            ssChannel.configureBlocking(false);
+            InetAddress host = InetAddress.getLocalHost();
+            ssChannel.socket().bind(new InetSocketAddress(host.getHostAddress(), 9999));
+            selector = Selector.open();
+            ssChannel.register(selector, SelectionKey.OP_ACCEPT);
+            System.out.println("Waiting for acceptance...");
+            while (!Thread.currentThread().isInterrupted()) {
+                selector.select();
+                Set<SelectionKey> selectedKeys = selector.selectedKeys();
+                for (var iter = selectedKeys.iterator(); iter.hasNext();) {
+                    SelectionKey key = iter.next();
+                    iter.remove();
+
+                    if (!key.isValid()) continue;
+                    if (key.isAcceptable()) acceptConnection(key);
+                    if (key.isReadable()) getQuery(key);
+                    if (key.isWritable()) {
+                        Object at = key.attachment();
+                        if (key.attachment() instanceof HashMap) sendInfo(key);
+                        else sendResponse(key);
+                    }
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
+
+
+    public static void main(String[] args) {
+        try (JsonHandler handler_ = new JsonHandler(".\\Server\\src\\main\\resources\\repository.json")) {
+            Service service = new ServerService(handler_);
+            service.run();
+        } catch (StartingProblemException | NonUniqueIdException e) {
+            System.out.println(e.getMessage());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(Messages.getMessage("warning.file_argument"));
         }
     }
 }

@@ -3,7 +3,6 @@ package commands;
 
 import constants.Messages;
 import elements.Person;
-import logic.IODevice;
 import logic.Manager;
 
 import java.util.ArrayList;
@@ -11,11 +10,11 @@ import java.util.ArrayList;
 public class UpdateIdCommand extends AbstractCommand {
     private ArrayList<String> keys;
     public UpdateIdCommand() {
-        setParameterNames("id");
-        setElements(Person.class, 1);
+        setParameterName("id");
+        setElement(Person.class);
         setValidator(param -> {
             try {
-                int id = Integer.parseInt(param[0]);
+                int id = Integer.parseInt(param);
                 keys = manager.findById(id);
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException(Messages.getMessage("warning.format.not_real",
@@ -32,7 +31,7 @@ public class UpdateIdCommand extends AbstractCommand {
     @Override
     public void execute() {
         for (String key : keys) {
-            manager.update(key, (Person) parser.getElements()[0]);
+            manager.update(key, (Person) parser.getElement());
         }
     }
 

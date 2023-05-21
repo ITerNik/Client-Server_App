@@ -12,7 +12,7 @@ public class FilterByLocationCommand extends AbstractCommand {
 
     private ArrayList<Person> selected;
     public FilterByLocationCommand() {
-        setElements(Location.class, 1);
+        setElement(Location.class);
     }
     public FilterByLocationCommand(Manager manager) {
         this();
@@ -21,7 +21,7 @@ public class FilterByLocationCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        selected = manager.filterByLocation((Location) parser.getElements()[0]);
+        selected = manager.filterByLocation((Location) parser.getElement());
     }
 
     @Override

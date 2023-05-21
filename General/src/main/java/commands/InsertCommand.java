@@ -2,18 +2,19 @@ package commands;
 
 import constants.Messages;
 import elements.Person;
-import logic.IODevice;
 import logic.Manager;
+
+import javax.xml.validation.Validator;
 
 
 public class InsertCommand extends AbstractCommand {
     public InsertCommand() {
-        setElements(Person.class, 1);
-        setParameterNames("key");
+        setElement(Person.class);
+        setParameterName("key");
         setValidator(param -> {
-            if (manager.containsKey(param[0]))
+            if (manager.containsKey(param))
                 throw new IllegalArgumentException(
-                        Messages.getMessage("warning.format.existing_element", param[0]));
+                        Messages.getMessage("warning.format.existing_element", param));
         });
     }
     public InsertCommand(Manager manager) {
@@ -23,7 +24,7 @@ public class InsertCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        manager.put(parser.getParameters()[0], (Person) parser.getElements()[0]);
+        manager.put(parser.getParameter(), (Person) parser.getElement());
     }
 
     @Override
@@ -33,7 +34,7 @@ public class InsertCommand extends AbstractCommand {
 
     @Override
     public String getReport() {
-        return Messages.getMessage("message.format.added", parser.getParameters()[0]);
+        return Messages.getMessage("message.format.added", parser.getParameter());
     }
 
     @Override

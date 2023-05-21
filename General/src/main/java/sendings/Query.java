@@ -1,7 +1,10 @@
-package logic;
+package sendings;
 
 import commands.ArgumentParser;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Query implements Serializable {
@@ -19,4 +22,10 @@ public class Query implements Serializable {
         return commandName;
     }
 
+    public byte[] getBytes() throws  IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(this);
+        return baos.toByteArray();
+    }
 }

@@ -1,16 +1,15 @@
 package commands;
 
 import constants.Messages;
-import logic.IODevice;
 import logic.Manager;
 
 public class RemoveKeyCommand extends AbstractCommand {
     public RemoveKeyCommand() {
-        setParameterNames("key");
+        setParameterName("key");
         setValidator(param -> {
-            if (!manager.containsKey(param[0]))
+            if (!manager.containsKey(param))
                 throw new IllegalArgumentException(
-                        Messages.getMessage("warning.format.non_existing_element", param[0]));
+                        Messages.getMessage("warning.format.non_existing_element", param));
         });
     }
     public RemoveKeyCommand(Manager manager) {
@@ -20,7 +19,7 @@ public class RemoveKeyCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        manager.remove(parser.getParameters()[0]);
+        manager.remove(parser.getParameter());
     }
 
     @Override
@@ -30,7 +29,7 @@ public class RemoveKeyCommand extends AbstractCommand {
 
     @Override
     public String getReport() {
-        return Messages.getMessage("message.format.success_delete", parser.getParameters()[0]);
+        return Messages.getMessage("message.format.success_delete", parser.getParameter());
     }
 
     @Override
