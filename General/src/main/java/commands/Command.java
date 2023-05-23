@@ -5,10 +5,11 @@ import java.io.Serializable;
 public interface Command extends Serializable {
     /**
      * Исполнение команды. Переопределяется в классах наследниках
+     *
      */
-    void execute();
-    ArgumentParser getParser();
-    Command setArguments(ArgumentParser parser);
+    boolean execute();
+    ReadableArguments<?> getArguments();
+    Command setArguments(ReadableArguments<?> arguments);
 
     /**
      * Возвращает название для добавления в список команд и вывода в help

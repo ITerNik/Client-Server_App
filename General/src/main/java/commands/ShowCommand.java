@@ -1,20 +1,25 @@
 package commands;
 
+import arguments.NoReadableArguments;
 import constants.Messages;
-import logic.IODevice;
 import logic.Manager;
 
 public class ShowCommand extends AbstractCommand {
-    private String report;
+
     public ShowCommand() {
     }
-    public ShowCommand( Manager manager) {
-        super (manager);
+
+    {
+        readable = new NoReadableArguments();
+    }
+
+    public ShowCommand(Manager manager) {
+        super(manager);
     }
 
     @Override
-    public void execute() {
-        report = manager.toString();
+    public boolean execute() {
+        return true;
     }
 
     @Override
@@ -24,7 +29,7 @@ public class ShowCommand extends AbstractCommand {
 
     @Override
     public String getReport() {
-        return report;
+        return manager.toString();
     }
 
     @Override

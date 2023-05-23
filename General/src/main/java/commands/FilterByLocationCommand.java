@@ -12,16 +12,24 @@ public class FilterByLocationCommand extends AbstractCommand {
 
     private ArrayList<Person> selected;
     public FilterByLocationCommand() {
-        setElement(Location.class);
+        //TODO: Deprecate setElement(Location.class);
     }
     public FilterByLocationCommand(Manager manager) {
-        this();
-        this.manager = manager;
+        super(manager);
+    }
+    {
+        readable = new ReadableArguments<Location>() {
+            @Override
+            public void read(IODevice io) {
+                arguments = io.readElement(Location.class);
+            }
+        };
     }
 
     @Override
-    public void execute() {
-        selected = manager.filterByLocation((Location) parser.getElement());
+    public boolean execute() {
+        selected = manager.filterByLocation((Location) readable.getArguments());
+        return true;
     }
 
     @Override

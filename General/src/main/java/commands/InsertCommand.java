@@ -1,30 +1,38 @@
 package commands;
 
+import java.util.AbstractMap.SimpleEntry;
+
 import constants.Messages;
 import elements.Person;
+import logic.IODevice;
 import logic.Manager;
-
-import javax.xml.validation.Validator;
 
 
 public class InsertCommand extends AbstractCommand {
     public InsertCommand() {
-        setElement(Person.class);
-        setParameterName("key");
-        setValidator(param -> {
-            if (manager.containsKey(param))
-                throw new IllegalArgumentException(
-                        Messages.getMessage("warning.format.existing_element", param));
-        });
     }
     public InsertCommand(Manager manager) {
-        this();
-        this.manager = manager;
+        super(manager);
+    }
+
+    {
+        readable = new ReadableArguments<SimpleEntry<String, Person>>() {
+            @Override
+            public void read(IODevice io) {
+                String key = io.read();
+                if (manager.containsKey(key))
+                    throw new IllegalArgumentException(
+                            Messages.getMessage("warning.format.existing_element", key));
+                arguments = new SimpleEntry<>(key, io.readElement(Person.class));
+            }
+        };
     }
 
     @Override
-    public void execute() {
-        manager.put(parser.getParameter(), (Person) parser.getElement());
+    public boolean execute() {
+        SimpleEntry<String, Person> entry = (SimpleEntry<String, Person>) readable.getArguments();
+        manager.put(entry.getKey(), entry.getValue());
+        return true;
     }
 
     @Override
@@ -34,7 +42,8 @@ public class InsertCommand extends AbstractCommand {
 
     @Override
     public String getReport() {
-        return Messages.getMessage("message.format.added", parser.getParameter());
+        SimpleEntry<String, Person> entry = (SimpleEntry<String, Person>) readable.getArguments();
+        return Messages.getMessage("message.format.added", entry.getKey());
     }
 
     @Override

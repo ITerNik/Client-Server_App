@@ -1,7 +1,6 @@
 package commands;
 
 import constants.Messages;
-import logic.IODevice;
 import logic.Manager;
 
 
@@ -10,13 +9,13 @@ public class TestCommand extends AbstractCommand {
 
     }
     public TestCommand(Manager manager) {
-        this();
-        this.manager = manager;
+        super(manager);
     }
 
 
     @Override
-    public void execute() {
+    public boolean execute() {
+        return true;
     }
 
     @Override

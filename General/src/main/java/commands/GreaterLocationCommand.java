@@ -8,17 +8,25 @@ import logic.Manager;
 public class GreaterLocationCommand extends AbstractCommand {
     private int count;
     public GreaterLocationCommand() {
-        setElement(Location.class);
+        //TODO Deprecate setElement(Location.class);
     }
 
     public GreaterLocationCommand(Manager manager) {
-        this();
-        this.manager = manager;
+        super(manager);
+    }
+    {
+        readable = new ReadableArguments<Location>() {
+            @Override
+            public void read(IODevice io) {
+                arguments = io.readElement(Location.class);
+            }
+        };
     }
 
     @Override
-    public void execute() {
-        count = manager.countGreaterThanLocation((Location) parser.getElement());
+    public boolean execute() {
+        count = manager.countGreaterThanLocation((Location) readable.getArguments());
+        return true;
     }
 
     @Override

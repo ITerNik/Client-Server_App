@@ -1,5 +1,7 @@
 package logic;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import commands.*;
 import constants.Messages;
 import exceptions.*;
@@ -45,10 +47,10 @@ public class ClientService implements Service {
             Command current = commandInfo.get(commandName);
             if (current == null) throw new NoSuchCommandException(
                     Messages.getMessage("warning.format.no_such_command", commandName));
-            ArgumentParser parser = current.getParser().parseFrom(cio);
+            ReadableArguments arguments = current.getArguments();
             System.out.println("Sending query...");
             oos = new ObjectOutputStream(socket.getOutputStream());
-            oos.writeObject(new Query(commandName, parser));
+            oos.writeObject(new Query(commandName, arguments));
             oos.close();
             System.out.println("Query sent");
             return true;
@@ -98,6 +100,27 @@ public class ClientService implements Service {
             InetAddress host = InetAddress.getLocalHost();
             socket = new Socket(host.getHostAddress(), 9999);
 
+            InputStream inputStream = socket.getInputStream();
+            OutputStream outputStream = socket.getOutputStream();
+            ObjectMapper mapper = new ObjectMapper();
+
+            StringBuilder responseBuilder = new StringBuilder();
+
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+
+            while (inputStream.available() != 0) {
+                bytesRead = inputStream.read(buffer);
+                responseBuilder.append(new String(buffer, 0, bytesRead));
+            }
+
+            String jsonResponse = responseBuilder.toString();
+            Map<String, ArgumentParser> commandInfo = mapper.readValue(jsonResponse, new TypeReference<Map<String, ArgumentParser>>() {});
+            for (Map.Entry<String, ArgumentParser> entry: commandInfo.entrySet()) {
+                System.out.println("Name: " + entry.getKey());
+                System.out.println("Element: " + entry.getValue().getElement());
+            }
+
             Query query = new Query("", null);
             OutputStream out = socket.getOutputStream();
             out.write(query.getBytes());
@@ -105,16 +128,15 @@ public class ClientService implements Service {
             System.out.println("Отправлено на сервер");
 
             // Получение ответа от сервера
-            InputStream in = socket.getInputStream();
-            byte[] bytes = new byte[1024];
-            in.read(bytes);
-            ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
+            buffer = new byte[1024];
+            inputStream.read(buffer);
+            //ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
             Response response = (Response) ois.readObject();
             System.out.println("Получено от сервера: " + response.getReport());
 
             // Закрытие потоков и сокета
             out.close();
-            in.close();
+            inputStream.close();
             socket.close();
             System.out.println("Соединение с сервером закрыто.");
         } catch (IOException | ClassNotFoundException e) {

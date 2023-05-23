@@ -9,16 +9,24 @@ import java.util.ArrayList;
 public class RemoveGreaterCommand extends AbstractCommand {
     private ArrayList<String> removed;
     public RemoveGreaterCommand() {
-        setParameterName("key");
+        //TODO Deprecate setParameterName("key");
     }
     public RemoveGreaterCommand(Manager manager) {
-        this();
-        this.manager = manager;
+        super(manager);
+    }
+    {
+        readable = new ReadableArguments<String>() {
+            @Override
+            public void read(IODevice io) {
+                arguments = io.read();
+            }
+        };
     }
 
     @Override
-    public void execute() {
-        removed = manager.removeGreater(parser.getParameter());
+    public boolean execute() {
+        removed = manager.removeGreater((String) readable.getArguments());
+        return true;
     }
 
     @Override

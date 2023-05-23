@@ -1,26 +1,27 @@
 package commands;
 
+import arguments.NoReadableArguments;
 import constants.Messages;
-import logic.IODevice;
 import logic.Manager;
 
 import java.util.Queue;
 
 public class HistoryCommand extends AbstractCommand {
-    private final Queue<Command> commandHistory;
+    private Queue<Command> commandHistory = null;
     private StringBuilder report = new StringBuilder();
     public HistoryCommand() {
-        this.commandHistory =  null;
     }
 
     public HistoryCommand(Queue<Command> commandHistory, Manager manager) {
         super(manager);
         this.commandHistory = commandHistory;
     }
+    {
+        readable = new NoReadableArguments();
+    }
 
     @Override
-    public void execute() {
-
+    public boolean execute() {
         if (commandHistory.isEmpty()) {
             report = new StringBuilder(Messages.getMessage("message.no_completed"));
         } else {
@@ -29,6 +30,7 @@ public class HistoryCommand extends AbstractCommand {
             }
             report = new StringBuilder(Messages.getMessage("message.completed")).append(report.toString());
         }
+        return true;
     }
 
     @Override

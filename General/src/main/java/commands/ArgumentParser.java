@@ -8,9 +8,10 @@ import java.io.Serializable;
 
 public class ArgumentParser implements Serializable {
     private String parameter;
-    transient private Object element;
+    private Object element;
     Class<?> type;
     private ValidChecker checker;
+    //TODO serialVersionUUID
 
     ArgumentParser() {
     }
@@ -36,7 +37,11 @@ public class ArgumentParser implements Serializable {
     }
 
     public void setElement(Class<?> type) {
-        this.element = new Object();
+        try {
+            this.element = type.getConstructor().newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.type = type;
     }
 

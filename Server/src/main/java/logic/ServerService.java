@@ -1,6 +1,8 @@
 package logic;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import commands.ArgumentParser;
 import commands.Command;
 import constants.Messages;
 import exceptions.NonUniqueIdException;
@@ -12,15 +14,13 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
-import java.util.ArrayDeque;
-import java.util.HashMap;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 public class ServerService implements Service {
     ServerSocketChannel ssChannel;
     Selector selector;
     CommandBuilder builder;
+    ObjectMapper mapper = new ObjectMapper();
     Manager manager;
     JsonHandler handler;
     Queue<Command> history = new ArrayDeque<>();
@@ -67,15 +67,12 @@ public class ServerService implements Service {
     }
     private void sendInfo(SelectionKey key) throws IOException {
         SocketChannel client = (SocketChannel) key.channel();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.writeObject(key.attachment());
-        oos.flush();
-        byte[] argumentsBytes = baos.toByteArray();
-        ByteBuffer buff = ByteBuffer.allocate(argumentsBytes.length);
-        buff.flip();
+        Map<String, ArgumentParser> usersMap = (Map<String, ArgumentParser>) key.attachment();
+        String json = mapper.writeValueAsString(usersMap);
 
-        client.write(buff);
+        ByteBuffer buffer = ByteBuffer.wrap(json.getBytes());
+        client.write(buffer);
+
         System.out.println("Info sent");
         key.interestOps(SelectionKey.OP_READ);
     }
@@ -127,7 +124,6 @@ public class ServerService implements Service {
                     if (key.isAcceptable()) acceptConnection(key);
                     if (key.isReadable()) getQuery(key);
                     if (key.isWritable()) {
-                        Object at = key.attachment();
                         if (key.attachment() instanceof HashMap) sendInfo(key);
                         else sendResponse(key);
                     }

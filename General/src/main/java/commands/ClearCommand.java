@@ -1,7 +1,7 @@
 package commands;
 
+import arguments.NoReadableArguments;
 import constants.Messages;
-import logic.IODevice;
 import logic.Manager;
 
 public class ClearCommand extends AbstractCommand {
@@ -10,9 +10,13 @@ public class ClearCommand extends AbstractCommand {
     public ClearCommand(Manager manager) {
         super(manager);
     }
+    {
+        readable = new NoReadableArguments();
+    }
     @Override
-    public void execute() {
+    public boolean execute() {
         manager.clear();
+        return true;
     }
 
     @Override

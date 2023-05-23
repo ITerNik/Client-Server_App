@@ -1,27 +1,29 @@
 package commands;
 
+import arguments.NoReadableArguments;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import constants.Messages;
 import exceptions.BadParametersException;
-import logic.IODevice;
 import logic.JsonHandler;
 import logic.Manager;
 
 import java.io.IOException;
 
 public class SaveCommand extends AbstractCommand {
-    private final JsonHandler handler;
+    private JsonHandler handler = null;
     public SaveCommand() {
-        handler = null;
     }
 
     public SaveCommand(Manager manager, JsonHandler handler) {
         super(manager);
         this.handler = handler;
     }
+    {
+        readable = new NoReadableArguments();
+    }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         try {
             handler.clear();
             handler.writeData(manager.getCollection());
@@ -30,6 +32,7 @@ public class SaveCommand extends AbstractCommand {
         } catch (IOException e) {
             throw new BadParametersException(Messages.getMessage("warning.write_error"));
         }
+        return true;
     }
 
     @Override

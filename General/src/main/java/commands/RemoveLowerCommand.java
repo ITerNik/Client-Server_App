@@ -10,16 +10,24 @@ import java.util.ArrayList;
 public class RemoveLowerCommand extends AbstractCommand {
     private ArrayList<String> removed;
     public RemoveLowerCommand() {
-        setElement(Person.class);
+        // TODO: setElement(Person.class);
     }
     public RemoveLowerCommand(Manager manager) {
-        this();
-        this.manager = manager;
+        super(manager);
+    }
+    {
+        readable = new ReadableArguments<Person>() {
+            @Override
+            public void read(IODevice io) {
+                arguments = io.readElement(Person.class);
+            }
+        };
     }
 
     @Override
-    public void execute() {
-        removed = manager.removeLower((Person) parser.getElement());
+    public boolean execute() {
+        removed = manager.removeLower((Person) readable.getArguments());
+        return true;
     }
 
     @Override

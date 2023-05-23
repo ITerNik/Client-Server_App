@@ -1,29 +1,31 @@
 package commands;
 
+import arguments.NoReadableArguments;
 import constants.Messages;
-import logic.IODevice;
 import logic.Manager;
 
 import java.util.HashMap;
 
 public class HelpCommand extends AbstractCommand {
-    private final HashMap<String, Command> commandList;
+    private HashMap<String, Command> commandList = new HashMap<>();
     private final StringBuilder report = new StringBuilder();
     public HelpCommand() {
-        commandList = null;
     }
 
     public HelpCommand(HashMap<String, Command> commandList, Manager manager) {
         super(manager);
         this.commandList = commandList;
-
+    }
+    {
+        readable = new NoReadableArguments();
     }
 
     @Override
-    public void execute() {
+    public boolean execute() {
         for (Command command : commandList.values()) {
             report.append(String.format("%s%s: %s\n", command.getName(), command.argumentsInfo(), command.getInfo()));
         }
+        return true;
     }
 
     @Override

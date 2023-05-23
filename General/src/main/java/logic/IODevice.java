@@ -3,6 +3,7 @@ package logic;
 import annotations.Builder;
 
 import java.io.Closeable;
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.Comparator;
 import java.util.Scanner;

@@ -1,15 +1,19 @@
 package commands;
 
+import arguments.NoReadableArguments;
 import constants.Messages;
 
-import java.util.NoSuchElementException;
-
 public class ExitCommand extends AbstractCommand {
-    public ExitCommand() {}
+    public ExitCommand() {
+    }
+
+    {
+        readable = new NoReadableArguments();
+    }
 
     @Override
-    public void execute() {
-        throw new NoSuchElementException();
+    public boolean execute() {
+        return false;
     }
 
     @Override
