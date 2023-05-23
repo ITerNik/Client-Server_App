@@ -1,5 +1,6 @@
 package commands;
 
+import arguments.ReadableArguments;
 import constants.Messages;
 import elements.Location;
 import logic.IODevice;
@@ -8,7 +9,6 @@ import logic.Manager;
 public class GreaterLocationCommand extends AbstractCommand {
     private int count;
     public GreaterLocationCommand() {
-        //TODO Deprecate setElement(Location.class);
     }
 
     public GreaterLocationCommand(Manager manager) {

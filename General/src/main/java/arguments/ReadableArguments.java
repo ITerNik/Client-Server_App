@@ -1,9 +1,12 @@
-package commands;
+package arguments;
 
 import logic.IODevice;
 
 public abstract class ReadableArguments<T> {
-    T arguments;
+    public ReadableArguments() {
+    }
+
+    protected T arguments;
 
     public abstract void read(IODevice io);
 

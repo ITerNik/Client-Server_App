@@ -1,5 +1,6 @@
 package commands;
 
+import arguments.ReadableArguments;
 import constants.Messages;
 import logic.IODevice;
 import logic.Manager;
@@ -15,7 +16,7 @@ public class RemoveKeyCommand extends AbstractCommand {
             @Override
             public void read(IODevice io) {
                 arguments = io.read();
-                if (!manager.containsKey(arguments))
+                if (!manager.containsKey(arguments)) //TODO: Лучше возвращать ответ сервера
                     throw new IllegalArgumentException(
                             Messages.getMessage("warning.format.non_existing_element", arguments));
             }

@@ -1,5 +1,6 @@
 package commands;
 
+import arguments.ReadableArguments;
 import constants.Messages;
 import elements.Location;
 import elements.Person;
@@ -12,7 +13,6 @@ public class FilterByLocationCommand extends AbstractCommand {
 
     private ArrayList<Person> selected;
     public FilterByLocationCommand() {
-        //TODO: Deprecate setElement(Location.class);
     }
     public FilterByLocationCommand(Manager manager) {
         super(manager);

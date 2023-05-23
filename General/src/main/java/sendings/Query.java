@@ -1,6 +1,6 @@
 package sendings;
 
-import commands.ArgumentParser;
+import arguments.ReadableArguments;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -8,15 +8,15 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Query implements Serializable {
-    public Query(String commandName, ArgumentParser parser) {
+    public Query(String commandName, ReadableArguments<?> arguments) {
         this.commandName = commandName;
-        this.parser = parser;
+        this.arguments = arguments;
     }
     private String commandName;
-    private ArgumentParser parser;
+    private ReadableArguments<?> arguments;
 
-    public ArgumentParser getParser() {
-        return parser;
+    public ReadableArguments getParser() {
+        return arguments;
     }
     public String getCommandName() {
         return commandName;

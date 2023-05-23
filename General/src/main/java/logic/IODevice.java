@@ -44,4 +44,8 @@ public abstract class IODevice implements Closeable {
     public void close() {
         input.close();
     }
+
+    public boolean hasNext() {
+        return input.hasNext();
+    }
 }

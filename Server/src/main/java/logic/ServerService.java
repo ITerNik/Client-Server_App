@@ -1,9 +1,9 @@
 package logic;
 
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import commands.ArgumentParser;
-import commands.Command;
+import arguments.ReadableArguments;
 import constants.Messages;
 import exceptions.NonUniqueIdException;
 import exceptions.StartingProblemException;
@@ -17,13 +17,12 @@ import java.nio.channels.*;
 import java.util.*;
 
 public class ServerService implements Service {
-    ServerSocketChannel ssChannel;
-    Selector selector;
-    CommandBuilder builder;
-    ObjectMapper mapper = new ObjectMapper();
-    Manager manager;
-    JsonHandler handler;
-    Queue<Command> history = new ArrayDeque<>();
+    private ServerSocketChannel ssChannel;
+    private Selector selector;
+    public CommandBuilder builder;
+    private ObjectMapper mapper = new ObjectMapper();
+    private Manager manager;
+    private JsonHandler handler; //TODO: Перетащить в manager
 
     public ServerService(JsonHandler handler) throws StartingProblemException, NonUniqueIdException {
         this.handler = handler;
@@ -67,10 +66,10 @@ public class ServerService implements Service {
     }
     private void sendInfo(SelectionKey key) throws IOException {
         SocketChannel client = (SocketChannel) key.channel();
-        Map<String, ArgumentParser> usersMap = (Map<String, ArgumentParser>) key.attachment();
-        String json = mapper.writeValueAsString(usersMap);
+        Map<String, ReadableArguments<?>> argumentsInfo = (Map<String, ReadableArguments<?>>) key.attachment();
+        byte[] mapBytes = mapper.writeValueAsBytes(argumentsInfo);
 
-        ByteBuffer buffer = ByteBuffer.wrap(json.getBytes());
+        ByteBuffer buffer = ByteBuffer.wrap(mapBytes);
         client.write(buffer);
 
         System.out.println("Info sent");
@@ -95,12 +94,6 @@ public class ServerService implements Service {
                 e.printStackTrace();
             }
         }
-    }
-    private void logCommand(Command command) {
-        if (history.size() >= 8) {
-            history.remove();
-        }
-        history.add(command);
     }
 
     public void run() {

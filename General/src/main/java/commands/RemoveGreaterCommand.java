@@ -1,5 +1,6 @@
 package commands;
 
+import arguments.ReadableArguments;
 import constants.Messages;
 import logic.IODevice;
 import logic.Manager;
@@ -9,7 +10,6 @@ import java.util.ArrayList;
 public class RemoveGreaterCommand extends AbstractCommand {
     private ArrayList<String> removed;
     public RemoveGreaterCommand() {
-        //TODO Deprecate setParameterName("key");
     }
     public RemoveGreaterCommand(Manager manager) {
         super(manager);

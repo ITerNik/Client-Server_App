@@ -1,5 +1,6 @@
 package logic;
 
+import arguments.ReadableArguments;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import commands.*;
@@ -18,6 +19,8 @@ public class ClientService implements Service {
     private Socket socket;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
+
+    ObjectMapper mapper = new ObjectMapper();
 
     public ClientService(CliDevice commandIO) {
         this.cio = commandIO;
@@ -47,7 +50,7 @@ public class ClientService implements Service {
             Command current = commandInfo.get(commandName);
             if (current == null) throw new NoSuchCommandException(
                     Messages.getMessage("warning.format.no_such_command", commandName));
-            ReadableArguments arguments = current.getArguments();
+            ReadableArguments<?> arguments = current.getArguments();
             System.out.println("Sending query...");
             oos = new ObjectOutputStream(socket.getOutputStream());
             oos.writeObject(new Query(commandName, arguments));
@@ -104,21 +107,10 @@ public class ClientService implements Service {
             OutputStream outputStream = socket.getOutputStream();
             ObjectMapper mapper = new ObjectMapper();
 
-            StringBuilder responseBuilder = new StringBuilder();
-
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-
-            while (inputStream.available() != 0) {
-                bytesRead = inputStream.read(buffer);
-                responseBuilder.append(new String(buffer, 0, bytesRead));
-            }
-
-            String jsonResponse = responseBuilder.toString();
-            Map<String, ArgumentParser> commandInfo = mapper.readValue(jsonResponse, new TypeReference<Map<String, ArgumentParser>>() {});
-            for (Map.Entry<String, ArgumentParser> entry: commandInfo.entrySet()) {
+            Map<String, ReadableArguments<?>> commandInfo = mapper.readValue(inputStream, new TypeReference<>() {});
+            for (Map.Entry<String, ReadableArguments<?>> entry: commandInfo.entrySet()) {
                 System.out.println("Name: " + entry.getKey());
-                System.out.println("Element: " + entry.getValue().getElement());
+                System.out.println("Element: " + entry.getValue().getArguments());
             }
 
             Query query = new Query("", null);
@@ -128,7 +120,7 @@ public class ClientService implements Service {
             System.out.println("Отправлено на сервер");
 
             // Получение ответа от сервера
-            buffer = new byte[1024];
+            byte[] buffer = new byte[1024];
             inputStream.read(buffer);
             //ois = new ObjectInputStream(new ByteArrayInputStream(bytes));
             Response response = (Response) ois.readObject();

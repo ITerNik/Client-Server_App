@@ -1,5 +1,7 @@
 package commands;
 
+import arguments.ReadableArguments;
+
 import java.io.Serializable;
 
 public interface Command extends Serializable {

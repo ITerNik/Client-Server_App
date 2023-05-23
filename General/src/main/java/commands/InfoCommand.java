@@ -12,7 +12,7 @@ public class InfoCommand extends AbstractCommand {
         super(manager);
     }
     {
-        readable = new NoReadableArguments();
+       readable = new NoReadableArguments();
     }
 
     @Override
