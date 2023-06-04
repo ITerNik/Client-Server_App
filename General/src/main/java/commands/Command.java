@@ -1,6 +1,6 @@
 package commands;
 
-import arguments.ReadableArguments;
+import arguments.ArgumentReader;
 
 import java.io.Serializable;
 
@@ -10,8 +10,8 @@ public interface Command extends Serializable {
      *
      */
     boolean execute();
-    ReadableArguments<?> getArguments();
-    Command setArguments(ReadableArguments<?> arguments);
+    ArgumentReader<?> getReader();
+    Command setArguments(ArgumentReader<?> arguments);
 
     /**
      * Возвращает название для добавления в список команд и вывода в help

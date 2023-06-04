@@ -1,8 +1,8 @@
 package commands;
 
-import arguments.ReadableArguments;
+import arguments.ArgumentReader;
+import arguments.KeyArguments;
 import constants.Messages;
-import logic.IODevice;
 import logic.Manager;
 
 public class RemoveKeyCommand extends AbstractCommand {
@@ -12,21 +12,13 @@ public class RemoveKeyCommand extends AbstractCommand {
         super(manager);
     }
     {
-        readable = new ReadableArguments<String>() {
-            @Override
-            public void read(IODevice io) {
-                arguments = io.read();
-                if (!manager.containsKey(arguments)) //TODO: Лучше возвращать ответ сервера
-                    throw new IllegalArgumentException(
-                            Messages.getMessage("warning.format.non_existing_element", arguments));
-            }
-        };
+        reader = new ArgumentReader<>(new KeyArguments());
     }
 
 
     @Override
     public boolean execute() {
-        manager.remove((String) readable.getArguments());
+        manager.remove((String) reader.getArgument());
         return true;
     }
 
@@ -37,7 +29,7 @@ public class RemoveKeyCommand extends AbstractCommand {
 
     @Override
     public String getReport() {
-        return Messages.getMessage("message.format.success_delete", readable.getArguments());
+        return Messages.getMessage("message.format.success_delete", reader.getArgument());
     }
 
     @Override

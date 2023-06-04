@@ -1,10 +1,10 @@
 package commands;
 
 
-import arguments.ReadableArguments;
+import arguments.ArgumentReader;
+import arguments.IntegerPersonArguments;
 import constants.Messages;
 import elements.Person;
-import logic.IODevice;
 import logic.Manager;
 
 import java.util.AbstractMap.SimpleEntry;
@@ -17,25 +17,17 @@ public class UpdateIdCommand extends AbstractCommand {
     public UpdateIdCommand(Manager manager) {
         super(manager);
     }
+
     {
-        readable = new ReadableArguments<SimpleEntry<ArrayList<String>, Person>>() {
-            @Override
-            public void read(IODevice io) {
-                try {
-                    int id = Integer.parseInt(io.read());
-                    arguments = new SimpleEntry<>(manager.findById(id), io.readElement(Person.class));
-                } catch (NumberFormatException e) {
-                    throw new IllegalArgumentException(Messages.getMessage("warning.format.not_real",
-                            Messages.getMessage("parameter.id")));
-                }
-            }
-        };
+        reader = new ArgumentReader<>(new IntegerPersonArguments());
     }
 
     @Override
     public boolean execute() {
-        for (String key : ((SimpleEntry<ArrayList<String>, Person>) readable.getArguments()).getKey()) {
-            manager.update(key, (Person) readable.getArguments());
+        SimpleEntry<?, ?> entry = (SimpleEntry<?, ?>) reader.getArgument();
+        ArrayList<String> keys = manager.findById((int) entry.getKey());
+        for (String key : keys) {
+            manager.update(key, (Person) reader.getArgument());
         }
         return true;
     }
@@ -47,7 +39,7 @@ public class UpdateIdCommand extends AbstractCommand {
 
     @Override
     public String getReport() {
-        return Messages.getMessage("message.format.updated", ((SimpleEntry) readable.getArguments()).getKey());
+        return Messages.getMessage("message.format.updated", ((SimpleEntry<?, ?>) reader.getArgument()).getKey());
     }
 
     @Override

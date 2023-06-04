@@ -1,5 +1,6 @@
 package commands;
 
+import arguments.ArgumentReader;
 import arguments.NoReadableArguments;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import constants.Messages;
@@ -19,7 +20,7 @@ public class SaveCommand extends AbstractCommand {
         this.handler = handler;
     }
     {
-        readable = new NoReadableArguments();
+        reader = new ArgumentReader<>(new NoReadableArguments());
     }
 
     @Override

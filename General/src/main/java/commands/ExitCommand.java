@@ -1,5 +1,6 @@
 package commands;
 
+import arguments.ArgumentReader;
 import arguments.NoReadableArguments;
 import constants.Messages;
 
@@ -8,7 +9,7 @@ public class ExitCommand extends AbstractCommand {
     }
 
     {
-        readable = new NoReadableArguments();
+        reader = new ArgumentReader<>(new NoReadableArguments());
     }
 
     @Override

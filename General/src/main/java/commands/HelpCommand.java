@@ -1,5 +1,6 @@
 package commands;
 
+import arguments.ArgumentReader;
 import arguments.NoReadableArguments;
 import constants.Messages;
 import logic.Manager;
@@ -17,7 +18,7 @@ public class HelpCommand extends AbstractCommand {
         this.commandList = commandList;
     }
     {
-        readable = new NoReadableArguments();
+        reader = new ArgumentReader<>(new NoReadableArguments());
     }
 
     @Override

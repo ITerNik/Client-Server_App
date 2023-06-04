@@ -1,6 +1,6 @@
 package commands;
 
-import arguments.ReadableArguments;
+import arguments.ArgumentReader;
 import constants.Messages;
 import logic.Manager;
 
@@ -10,7 +10,7 @@ import logic.Manager;
  * Все команды наследуются от этого класса и переопределяют исполнение в соответствии с требованиями.
  */
 public abstract class AbstractCommand implements Command {
-    protected ReadableArguments<?> readable;
+    protected ArgumentReader<?> reader;
     protected Manager manager;
 
     public AbstractCommand() {
@@ -20,14 +20,14 @@ public abstract class AbstractCommand implements Command {
     }
 
     @Override
-    public Command setArguments(ReadableArguments<?> arguments) {
-        this.readable = arguments;
+    public Command setArguments(ArgumentReader<?> reader) {
+        this.reader = reader;
         return this;
     }
 
     @Override
-    public ReadableArguments<?> getArguments() {
-        return readable;
+    public ArgumentReader<?> getReader() {
+        return reader;
     }
 
     @Override
@@ -42,6 +42,6 @@ public abstract class AbstractCommand implements Command {
 
     @Override
     public String argumentsInfo() {
-        return readable.getInfo();
+        return ""; //TODO: Add info method
     }
 }

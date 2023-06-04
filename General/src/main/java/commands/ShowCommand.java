@@ -1,5 +1,6 @@
 package commands;
 
+import arguments.ArgumentReader;
 import arguments.NoReadableArguments;
 import constants.Messages;
 import logic.Manager;
@@ -10,7 +11,7 @@ public class ShowCommand extends AbstractCommand {
     }
 
     {
-        readable = new NoReadableArguments();
+        reader = new ArgumentReader<>(new NoReadableArguments());
     }
 
     public ShowCommand(Manager manager) {

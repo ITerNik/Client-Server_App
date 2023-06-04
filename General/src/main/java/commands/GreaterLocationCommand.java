@@ -1,9 +1,9 @@
 package commands;
 
-import arguments.ReadableArguments;
+import arguments.ArgumentReader;
+import arguments.LocationArguments;
 import constants.Messages;
 import elements.Location;
-import logic.IODevice;
 import logic.Manager;
 
 public class GreaterLocationCommand extends AbstractCommand {
@@ -15,17 +15,12 @@ public class GreaterLocationCommand extends AbstractCommand {
         super(manager);
     }
     {
-        readable = new ReadableArguments<Location>() {
-            @Override
-            public void read(IODevice io) {
-                arguments = io.readElement(Location.class);
-            }
-        };
+        reader = new ArgumentReader<>(new LocationArguments());
     }
 
     @Override
     public boolean execute() {
-        count = manager.countGreaterThanLocation((Location) readable.getArguments());
+        count = manager.countGreaterThanLocation((Location) reader.getArgument());
         return true;
     }
 

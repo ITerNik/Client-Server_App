@@ -2,10 +2,10 @@ package commands;
 
 import java.util.AbstractMap.SimpleEntry;
 
-import arguments.ReadableArguments;
+import arguments.ArgumentReader;
+import arguments.StringPersonArguments;
 import constants.Messages;
 import elements.Person;
-import logic.IODevice;
 import logic.Manager;
 
 
@@ -17,21 +17,12 @@ public class InsertCommand extends AbstractCommand {
     }
 
     {
-        readable = new ReadableArguments<SimpleEntry<String, Person>>() {
-            @Override
-            public void read(IODevice io) {
-                String key = io.read();
-                if (manager.containsKey(key))
-                    throw new IllegalArgumentException(
-                            Messages.getMessage("warning.format.existing_element", key));
-                arguments = new SimpleEntry<>(key, io.readElement(Person.class));
-            }
-        };
+        reader = new ArgumentReader<>(new StringPersonArguments());
     }
 
     @Override
     public boolean execute() {
-        SimpleEntry<String, Person> entry = (SimpleEntry<String, Person>) readable.getArguments();
+        SimpleEntry<String, Person> entry = (SimpleEntry<String, Person>) reader.getArgument();
         manager.put(entry.getKey(), entry.getValue());
         return true;
     }
@@ -43,8 +34,7 @@ public class InsertCommand extends AbstractCommand {
 
     @Override
     public String getReport() {
-        SimpleEntry<String, Person> entry = (SimpleEntry<String, Person>) readable.getArguments();
-        return Messages.getMessage("message.format.added", entry.getKey());
+        return Messages.getMessage("message.format.added", ((SimpleEntry<?, ?>) reader.getArgument()).getKey());
     }
 
     @Override

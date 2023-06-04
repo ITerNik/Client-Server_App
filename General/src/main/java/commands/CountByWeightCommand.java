@@ -1,9 +1,9 @@
 package commands;
 
-import arguments.ReadableArguments;
+import arguments.ArgumentReader;
+import arguments.WeightArguments;
 import constants.Messages;
-import exceptions.BadParametersException;
-import logic.IODevice;
+
 import logic.Manager;
 
 public class CountByWeightCommand extends AbstractCommand {
@@ -16,23 +16,12 @@ public class CountByWeightCommand extends AbstractCommand {
         super(manager);
     }
     {
-        readable = new ReadableArguments<Double>() {
-            @Override
-            public void read(IODevice io) {
-                try {
-                    arguments = Double.parseDouble(io.read());
-                } catch (NumberFormatException e) {
-                    throw new BadParametersException(Messages.getMessage("warning.format.not_real",
-                            Messages.getMessage("parameter.weight")));
-                    //TODO: BadParam -> Exception
-                }
-            }
-        };
+        reader = new ArgumentReader<>(new WeightArguments());
     }
 
     @Override
     public boolean execute() {
-        count = manager.countByWeight((double) readable.getArguments());
+        count = manager.countByWeight((double) reader.getArgument());
         return true;
     }
 

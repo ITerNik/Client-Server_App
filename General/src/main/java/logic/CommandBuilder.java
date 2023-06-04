@@ -1,6 +1,6 @@
 package logic;
 
-import arguments.ReadableArguments;
+import arguments.ArgumentReader;
 import commands.*;
 import sendings.Query;
 
@@ -8,7 +8,7 @@ import java.util.*;
 
 public class CommandBuilder {
     private final HashMap<String, Command> commandList = new HashMap<>();
-    private final HashMap<String, ReadableArguments<?>> commandInfo = new HashMap<>();
+    private final HashMap<String, ArgumentReader<?>> commandInfo = new HashMap<>();
     private ArrayList<String> fileLog;
     private final Queue<Command> commandLog = new ArrayDeque<>() {
         @Override
@@ -34,7 +34,7 @@ public class CommandBuilder {
         for (Command command : commands) {
             String commandName = command.getName();
             commandList.put(commandName, command);
-            commandInfo.put(commandName, command.getArguments());
+            commandInfo.put(commandName, command.getReader());
         }
     }
 
@@ -48,7 +48,7 @@ public class CommandBuilder {
     }
 
     public Command build(Query query) {
-        return commandList.get(query.getCommandName()).setArguments(query.getParser());
+        return commandList.get(query.getCommandName()).setArguments(query.getArguments());
     }
     public Command get(String name) {
         return commandList.getOrDefault(name, new InfoCommand(manager));
@@ -65,7 +65,7 @@ public class CommandBuilder {
         commandLog.add(command);
     }
 
-    public HashMap<String, ReadableArguments<?>> getArguments() {
+    public HashMap<String, ArgumentReader<?>> getArguments() {
         return commandInfo;
     }
 

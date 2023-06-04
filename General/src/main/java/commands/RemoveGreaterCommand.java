@@ -1,8 +1,8 @@
 package commands;
 
-import arguments.ReadableArguments;
+import arguments.ArgumentReader;
+import arguments.KeyArguments;
 import constants.Messages;
-import logic.IODevice;
 import logic.Manager;
 
 import java.util.ArrayList;
@@ -15,17 +15,12 @@ public class RemoveGreaterCommand extends AbstractCommand {
         super(manager);
     }
     {
-        readable = new ReadableArguments<String>() {
-            @Override
-            public void read(IODevice io) {
-                arguments = io.read();
-            }
-        };
+        reader = new ArgumentReader<>(new KeyArguments());
     }
 
     @Override
     public boolean execute() {
-        removed = manager.removeGreater((String) readable.getArguments());
+        removed = manager.removeGreater((String) reader.getArgument());
         return true;
     }
 

@@ -1,9 +1,9 @@
 package commands;
 
-import arguments.ReadableArguments;
+import arguments.ArgumentReader;
+import arguments.PersonArguments;
 import constants.Messages;
 import elements.Person;
-import logic.IODevice;
 import logic.Manager;
 
 import java.util.ArrayList;
@@ -16,17 +16,12 @@ public class RemoveLowerCommand extends AbstractCommand {
         super(manager);
     }
     {
-        readable = new ReadableArguments<Person>() {
-            @Override
-            public void read(IODevice io) {
-                arguments = io.readElement(Person.class);
-            }
-        };
+        reader = new ArgumentReader<>(new PersonArguments());
     }
 
     @Override
     public boolean execute() {
-        removed = manager.removeLower((Person) readable.getArguments());
+        removed = manager.removeLower((Person) reader.getArgument());
         return true;
     }
 

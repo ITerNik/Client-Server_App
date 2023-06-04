@@ -1,10 +1,10 @@
 package commands;
 
-import arguments.ReadableArguments;
+import arguments.ArgumentReader;
+import arguments.LocationArguments;
 import constants.Messages;
 import elements.Location;
 import elements.Person;
-import logic.IODevice;
 import logic.Manager;
 
 import java.util.ArrayList;
@@ -18,17 +18,12 @@ public class FilterByLocationCommand extends AbstractCommand {
         super(manager);
     }
     {
-        readable = new ReadableArguments<Location>() {
-            @Override
-            public void read(IODevice io) {
-                arguments = io.readElement(Location.class);
-            }
-        };
+        reader = new ArgumentReader<>(new LocationArguments());
     }
 
     @Override
     public boolean execute() {
-        selected = manager.filterByLocation((Location) readable.getArguments());
+        selected = manager.filterByLocation((Location) reader.getArgument());
         return true;
     }
 

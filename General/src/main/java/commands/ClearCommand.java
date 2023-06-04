@@ -1,5 +1,6 @@
 package commands;
 
+import arguments.ArgumentReader;
 import arguments.NoReadableArguments;
 import constants.Messages;
 import logic.Manager;
@@ -11,7 +12,7 @@ public class ClearCommand extends AbstractCommand {
         super(manager);
     }
     {
-        readable = new NoReadableArguments();
+        reader = new ArgumentReader<>(new NoReadableArguments());
     }
     @Override
     public boolean execute() {
