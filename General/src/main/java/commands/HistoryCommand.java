@@ -22,7 +22,7 @@ public class HistoryCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean execute() {
+    public void execute() {
         if (commandHistory.isEmpty()) {
             report = new StringBuilder(Messages.getMessage("message.no_completed"));
         } else {
@@ -31,7 +31,6 @@ public class HistoryCommand extends AbstractCommand {
             }
             report = new StringBuilder(Messages.getMessage("message.completed")).append(report.toString());
         }
-        return true;
     }
 
     @Override

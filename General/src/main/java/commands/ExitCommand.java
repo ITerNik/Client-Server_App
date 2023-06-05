@@ -3,6 +3,7 @@ package commands;
 import arguments.ArgumentReader;
 import arguments.NoReadableArguments;
 import constants.Messages;
+import exceptions.CloseConnectionSignal;
 
 public class ExitCommand extends AbstractCommand {
     public ExitCommand() {
@@ -13,8 +14,8 @@ public class ExitCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean execute() {
-        return false;
+    public void execute() {
+        throw new CloseConnectionSignal("Соединение закрыто");
     }
 
     @Override

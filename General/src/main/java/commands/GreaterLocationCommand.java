@@ -19,9 +19,8 @@ public class GreaterLocationCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean execute() {
+    public void execute() {
         count = manager.countGreaterThanLocation((Location) reader.getArgument());
-        return true;
     }
 
     @Override

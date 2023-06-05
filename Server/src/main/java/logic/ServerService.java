@@ -3,8 +3,11 @@ package logic;
 
 import arguments.ArgumentReader;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import commands.Command;
 import constants.Constants;
 import constants.Messages;
+import exceptions.CloseConnectionSignal;
+import exceptions.NoSuchCommandException;
 import exceptions.NonUniqueIdException;
 import exceptions.StartingProblemException;
 import sendings.Query;
@@ -19,14 +22,15 @@ import java.util.*;
 public class ServerService implements Service {
     private ServerSocketChannel ssChannel;
     private Selector selector;
-    public CommandBuilder builder;
-    private ObjectMapper mapper = new ObjectMapper();
-    private Manager manager;
-    private JsonHandler handler; //TODO: Перетащить в manager
+    private final CommandBuilder builder;
 
-    public ServerService(JsonHandler handler) throws StartingProblemException, NonUniqueIdException {
-        this.handler = handler;
-        this.manager = new CollectionManager(handler.readCollection());
+    private Scanner input = new Scanner(System.in);
+
+    private final ObjectMapper mapper = new ObjectMapper();
+    private Manager manager;
+
+    public ServerService(String fileName) throws StartingProblemException, NonUniqueIdException {
+        this.manager = new CollectionManager(fileName);
         this.builder = new CommandBuilder(manager);
         initConnection();
     }
@@ -61,20 +65,26 @@ public class ServerService implements Service {
         byte[] queryBytes = out.toByteArray();
 
         Query query = mapper.readValue(queryBytes, Query.class);
-
         System.out.println("Received");
-        key.attach(query);
+        Response response = handleQuery(query);
+
+        key.attach(response);
         key.interestOps(SelectionKey.OP_WRITE);
+    }
+
+    private Response handleQuery(Query query) {
+        Command command = builder.build(query);
+        command.execute();
+        builder.logCommand(command);
+        return new Response(command.getReport());
     }
 
     private void sendResponse(SelectionKey key) throws IOException {
         SocketChannel client = (SocketChannel) key.channel();
-        Response response = Response.ok("OK");
-        byte[] responseBytes = response.getBytes();
-        ByteBuffer buff = ByteBuffer.allocate(responseBytes.length);
-        buff.put(responseBytes);
-        buff.flip();
-        client.write(buff);
+        Response response = (Response) key.attachment();
+        ByteBuffer responseBytes = ByteBuffer.wrap(mapper.writeValueAsBytes(response));
+        client.write(responseBytes);
+
         System.out.println("Response sent");
         key.interestOps(SelectionKey.OP_READ);
     }
@@ -100,7 +110,7 @@ public class ServerService implements Service {
     }
 
     private void closeConnection() {
-        System.out.println("Closing server");
+        System.out.println("Соединение закрыто");
         if (selector != null) {
             try {
                 selector.close();
@@ -115,6 +125,7 @@ public class ServerService implements Service {
     public void run() {
         try {
             while (!Thread.currentThread().isInterrupted()) {
+                checkInput();
                 selector.select(Constants.TIMEOUT);
                 Set<SelectionKey> selectedKeys = selector.selectedKeys();
                 for (var iter = selectedKeys.iterator(); iter.hasNext(); ) {
@@ -130,6 +141,7 @@ public class ServerService implements Service {
                     }
                 }
             }
+        } catch (CloseConnectionSignal ignored) {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
@@ -137,10 +149,22 @@ public class ServerService implements Service {
         }
     }
 
+    private void checkInput() throws IOException {
+        while (System.in.available() > 0) {
+            try {
+                Command command = builder.build(input.next());
+                command.execute();
+                System.out.println(command.getReport());
+            } catch (NoSuchCommandException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
 
     public static void main(String[] args) {
-        try (JsonHandler handler_ = new JsonHandler(".\\Server\\src\\main\\resources\\repository.json")) {
-            Service service = new ServerService(handler_);
+        try {
+            Service service = new ServerService(".\\Server\\src\\main\\resources\\repository.json");
             service.run();
         } catch (StartingProblemException | NonUniqueIdException e) {
             System.out.println(e.getMessage());

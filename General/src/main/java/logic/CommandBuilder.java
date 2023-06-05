@@ -2,12 +2,15 @@ package logic;
 
 import arguments.ArgumentReader;
 import commands.*;
+import constants.Messages;
+import exceptions.NoSuchCommandException;
 import sendings.Query;
 
 import java.util.*;
 
 public class CommandBuilder {
-    private final HashMap<String, Command> commandList = new HashMap<>();
+    private final HashMap<String, Command> clientCommandList = new HashMap<>(),
+    serverCommandList = new HashMap<>();
     private final HashMap<String, ArgumentReader<?>> commandInfo = new HashMap<>();
     private ArrayList<String> fileLog;
     private final Queue<Command> commandLog = new ArrayDeque<>() {
@@ -33,7 +36,7 @@ public class CommandBuilder {
     public void addCommand(Command... commands) {
         for (Command command : commands) {
             String commandName = command.getName();
-            commandList.put(commandName, command);
+            clientCommandList.put(commandName, command);
             commandInfo.put(commandName, command.getReader());
         }
     }
@@ -41,17 +44,25 @@ public class CommandBuilder {
     private void initialize() {
         addCommand(new ExitCommand(), new ClearCommand(), new TestCommand(),
                 new InfoCommand(manager), new ShowCommand(manager), new InsertCommand(manager),
-                new RemoveKeyCommand(manager), new UpdateIdCommand(), new SaveCommand(),
+                new RemoveKeyCommand(manager), new UpdateIdCommand(),
                 new RemoveLowerCommand(manager), new HistoryCommand(commandLog, manager), new RemoveGreaterCommand(manager),
-                new HelpCommand(commandList, manager), new CountByWeightCommand(manager), new GreaterLocationCommand(manager),
+                new HelpCommand(clientCommandList, manager), new CountByWeightCommand(manager), new GreaterLocationCommand(manager),
                 new FilterByLocationCommand(manager));
+        serverCommandList.put("save", new SaveCommand(manager));
+        serverCommandList.put("exit", new ExitCommand());
     }
 
     public Command build(Query query) {
-        return commandList.get(query.getCommandName()).setArguments(query.getArguments());
+        return clientCommandList.get(query.getCommandName()).setArguments(query.getArguments());
+    }
+    public Command build(String name) {
+        Command command = serverCommandList.get(name);
+        if (command == null) throw new NoSuchCommandException(
+                Messages.getMessage("warning.format.no_such_command", name));
+        return command;
     }
     public Command get(String name) {
-        return commandList.getOrDefault(name, new InfoCommand(manager));
+        return clientCommandList.getOrDefault(name, new InfoCommand(manager));
     }
 
     public boolean logFile(String fileName) {

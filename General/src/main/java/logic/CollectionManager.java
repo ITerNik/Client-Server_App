@@ -5,7 +5,9 @@ import elements.Location;
 import elements.Person;
 import exceptions.BadParametersException;
 import exceptions.NonUniqueIdException;
+import exceptions.StartingProblemException;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,6 +20,7 @@ import java.util.function.Predicate;
 
 public class CollectionManager implements Manager {
     private final Hashtable<String, Person> collection;
+    private JsonHandler handler;
     private final DependentSet<Integer> uniqueSet = new DependentSet<>();
     private final LocalDateTime date;
 
@@ -27,8 +30,9 @@ public class CollectionManager implements Manager {
         date = LocalDateTime.now();
     }
 
-    public CollectionManager(Hashtable<String, Person> collection) throws NonUniqueIdException {
-        this.collection = collection;
+    public CollectionManager(String filename) throws NonUniqueIdException, StartingProblemException {
+        this.handler = new JsonHandler(filename);
+        this.collection = handler.readCollection();
         for (String key : collection.keySet()) {
             if (!uniqueSet.add(collection.get(key).getId()))
                 throw new NonUniqueIdException(Messages.getMessage("warning.non_unique_id"));
@@ -93,6 +97,10 @@ public class CollectionManager implements Manager {
     public void clear() {
         collection.clear();
         uniqueSet.clear();
+    }
+    public void save() throws IOException {
+        handler.clear();
+        handler.writeData(collection);
     }
 
     public int countByWeight(double weight) {

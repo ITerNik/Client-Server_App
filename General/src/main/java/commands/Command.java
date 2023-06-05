@@ -7,9 +7,8 @@ import java.io.Serializable;
 public interface Command extends Serializable {
     /**
      * Исполнение команды. Переопределяется в классах наследниках
-     *
      */
-    boolean execute();
+    void execute();
     ArgumentReader<?> getReader();
     Command setArguments(ArgumentReader<?> arguments);
 

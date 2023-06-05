@@ -20,9 +20,8 @@ public class CountByWeightCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean execute() {
+    public void execute() {
         count = manager.countByWeight((double) reader.getArgument());
-        return true;
     }
 
     @Override

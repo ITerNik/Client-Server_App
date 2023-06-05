@@ -17,8 +17,7 @@ public class InfoCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean execute() {
-        return true;
+    public void execute() {
     }
 
     @Override

@@ -22,9 +22,8 @@ public class FilterByLocationCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean execute() {
+    public void execute() {
         selected = manager.filterByLocation((Location) reader.getArgument());
-        return true;
     }
 
     @Override

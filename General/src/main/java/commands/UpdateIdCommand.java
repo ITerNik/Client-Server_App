@@ -23,13 +23,12 @@ public class UpdateIdCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean execute() {
+    public void execute() {
         SimpleEntry<?, ?> entry = (SimpleEntry<?, ?>) reader.getArgument();
         ArrayList<String> keys = manager.findById((int) entry.getKey());
         for (String key : keys) {
             manager.update(key, (Person) reader.getArgument());
         }
-        return true;
     }
 
     @Override

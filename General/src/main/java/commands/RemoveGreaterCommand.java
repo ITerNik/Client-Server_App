@@ -19,9 +19,8 @@ public class RemoveGreaterCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean execute() {
+    public void execute() {
         removed = manager.removeGreater((String) reader.getArgument());
-        return true;
     }
 
     @Override

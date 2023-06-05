@@ -17,9 +17,8 @@ public class RemoveKeyCommand extends AbstractCommand {
 
 
     @Override
-    public boolean execute() {
+    public void execute() {
         manager.remove((String) reader.getArgument());
-        return true;
     }
 
     @Override

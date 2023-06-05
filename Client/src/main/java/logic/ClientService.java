@@ -34,17 +34,22 @@ public class ClientService implements Service {
     public void sendQuery() {
         while (true) {
             String commandName = cio.read();
+            if (commandName.equals("exit")) break;
+            if (!commandInfo.containsKey(commandName)) {
+                System.out.println(Messages.getMessage("warning.format.no_such_command", commandName));
+                continue;
+            }
             ArgumentReader<?> arguments = commandInfo.get(commandName);
-            if (arguments == null) throw new NoSuchCommandException(
-                    Messages.getMessage("warning.format.no_such_command", commandName));
             try {
                 arguments.read(cio);
 
                 Query query = new Query(commandName, arguments);
                 outputStream.write(mapper.writeValueAsBytes(query));
                 outputStream.flush();
-
                 System.out.println("Отправлено на сервер");
+
+                Response response = mapper.readValue(inputStream, Response.class);
+                System.out.println(response.getReport());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -65,19 +70,9 @@ public class ClientService implements Service {
         }
     }
 
-    public Response getResponse() {
-        try {
-            return mapper.readValue(inputStream, Response.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Response.error("");
-    }
-
     public void run() {
         try {
             sendQuery();
-            getResponse();
         } catch (IllegalStateException e) {
             e.printStackTrace();
         } finally {

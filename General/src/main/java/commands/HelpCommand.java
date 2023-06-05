@@ -22,11 +22,10 @@ public class HelpCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean execute() {
+    public void execute() {
         for (Command command : commandList.values()) {
             report.append(String.format("%s%s: %s\n", command.getName(), command.argumentsInfo(), command.getInfo()));
         }
-        return true;
     }
 
     @Override

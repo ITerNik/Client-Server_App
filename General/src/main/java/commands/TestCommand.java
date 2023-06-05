@@ -18,8 +18,7 @@ public class TestCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean execute() {
-        return true;
+    public void execute() {
     }
 
     @Override

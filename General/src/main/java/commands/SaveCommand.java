@@ -11,29 +11,23 @@ import logic.Manager;
 import java.io.IOException;
 
 public class SaveCommand extends AbstractCommand {
-    private JsonHandler handler = null;
     public SaveCommand() {
     }
 
-    public SaveCommand(Manager manager, JsonHandler handler) {
+    public SaveCommand(Manager manager) {
         super(manager);
-        this.handler = handler;
     }
     {
         reader = new ArgumentReader<>(new NoReadableArguments());
     }
 
     @Override
-    public boolean execute() {
+    public void execute() {
         try {
-            handler.clear();
-            handler.writeData(manager.getCollection());
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            manager.save();
         } catch (IOException e) {
             throw new BadParametersException(Messages.getMessage("warning.write_error"));
         }
-        return true;
     }
 
     @Override

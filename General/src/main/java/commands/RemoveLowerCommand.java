@@ -20,9 +20,8 @@ public class RemoveLowerCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean execute() {
+    public void execute() {
         removed = manager.removeLower((Person) reader.getArgument());
-        return true;
     }
 
     @Override

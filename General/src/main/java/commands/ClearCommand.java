@@ -15,9 +15,8 @@ public class ClearCommand extends AbstractCommand {
         reader = new ArgumentReader<>(new NoReadableArguments());
     }
     @Override
-    public boolean execute() {
+    public void execute() {
         manager.clear();
-        return true;
     }
 
     @Override

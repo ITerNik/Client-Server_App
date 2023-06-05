@@ -21,10 +21,9 @@ public class InsertCommand extends AbstractCommand {
     }
 
     @Override
-    public boolean execute() {
+    public void execute() {
         SimpleEntry<String, Person> entry = (SimpleEntry<String, Person>) reader.getArgument();
         manager.put(entry.getKey(), entry.getValue());
-        return true;
     }
 
     @Override

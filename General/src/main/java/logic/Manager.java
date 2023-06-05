@@ -3,6 +3,7 @@ package logic;
 import elements.Location;
 import elements.Person;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -21,14 +22,13 @@ public interface Manager extends Serializable {
     ArrayList<String> removeLower(Person element);
 
     void clear();
+    void save() throws IOException;
 
     int countByWeight(double weight);
 
     ArrayList<Person> filterByLocation(Location readElement);
 
     int countGreaterThanLocation(Location readElement);
-
-    Hashtable<String, Person> getCollection();
 
     ArrayList<String> findById(int id);
 
