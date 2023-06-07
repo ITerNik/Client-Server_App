@@ -1,6 +1,7 @@
 package logic;
 
 import arguments.ArgumentReader;
+import arguments.FileArguments;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,8 +12,8 @@ import sendings.Query;
 import sendings.Response;
 
 import java.io.*;
-import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.*;
 
 public class ClientService implements Service {
@@ -22,16 +23,17 @@ public class ClientService implements Service {
     private HashMap<String, ArgumentReader<?>> commandInfo;
 
     ObjectMapper mapper = new ObjectMapper();
+
     {
         mapper.disable(JsonParser.Feature.AUTO_CLOSE_SOURCE);
     }
 
-    public ClientService(CliDevice cio) {
+    public ClientService(CliDevice cio) throws BadConnectionException {
         this.cio = cio;
         initConnection();
     }
 
-    public void sendQuery() {
+    public void sendQuery() throws BadConnectionException {
         while (true) {
             String commandName = cio.read();
             if (commandName.equals("exit")) break;
@@ -50,35 +52,24 @@ public class ClientService implements Service {
 
                 Response response = mapper.readValue(inputStream, Response.class);
                 System.out.println(response.getReport());
+            } catch (BadParametersException e) {
+                System.out.println(e.getMessage());
+            } catch (SocketException e) {
+                initConnection();
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
     }
 
-    public void initConnection() {
-        try {
-            Socket socket = new Socket(Constants.CLIENT_HOST, Constants.PORT);
-            inputStream = socket.getInputStream();
-            outputStream = socket.getOutputStream();
-            commandInfo = mapper.readValue(inputStream, new TypeReference<>() {
-            });
-        } catch (ConnectException e) {
-            System.out.println("Connection failed");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void run() {
         try {
             sendQuery();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
+        } catch (BadConnectionException e) {
+            System.out.println(e.getMessage());
         } finally {
             closeConnection();
         }
-
     }
 
     public void closeConnection() {
@@ -91,10 +82,42 @@ public class ClientService implements Service {
         }
     }
 
+    public void initConnection() throws BadConnectionException {
+        int retry = 1;
+        for (; retry <= Constants.MAX_RETRY; retry++) {
+            try {
+                Socket socket = new Socket(Constants.CLIENT_HOST, Constants.PORT);
+                inputStream = socket.getInputStream();
+                outputStream = socket.getOutputStream();
+
+                if (commandInfo == null) {
+                    commandInfo = mapper.readValue(inputStream, new TypeReference<>() {});
+                    commandInfo.put("execute_script", new ArgumentReader<>(new FileArguments(commandInfo)));
+                }
+                break;
+            } catch (SocketException e) {
+                System.out.println("Ожидание соединения с сервером...");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                Thread.sleep(Constants.RETRY_DELAY);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (retry > Constants.MAX_RETRY) {
+            throw new BadConnectionException("Сервер временно недоступен");
+        }
+    }
+
     public static void main(String[] args) {
         try (CliDevice cio = new CliDevice()) {
             ClientService client = new ClientService(cio);
             client.run();
+        } catch (BadConnectionException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

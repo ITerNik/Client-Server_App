@@ -4,33 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="031b67b1-f434-4a75-9209-ee7f7ccc700c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/General/src/main/java/exceptions/CloseConnectionSignal.java" afterDir="false" />
+    <list default="true" id="031b67b1-f434-4a75-9209-ee7f7ccc700c" name="Changes" comment="Established query-response exchange">
+      <change afterPath="$PROJECT_DIR$/General/src/main/java/arguments/FileArguments.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Server/src/main/java/commands/ExecuteScriptCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/exceptions/NoSuchCommandException.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/exceptions/NoSuchCommandException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/src/main/java/logic/CliDevice.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/logic/CliDevice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/src/main/java/logic/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/logic/ClientService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/ReadableArguments.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/ClearCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/ClearCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/CountByWeightCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/CountByWeightCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/ExitCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/ExitCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/FilterByLocationCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/FilterByLocationCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/GreaterLocationCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/GreaterLocationCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/HelpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/HelpCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/HistoryCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/HistoryCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/InfoCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/InfoCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/InsertCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/InsertCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/RemoveGreaterCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/RemoveGreaterCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/RemoveKeyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/RemoveKeyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/RemoveLowerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/RemoveLowerCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/SaveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/SaveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/ShowCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/ShowCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/TestCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/TestCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/UpdateIdCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/commands/UpdateIdCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/logic/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/logic/CollectionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/logic/CommandBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/logic/CommandBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/logic/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/logic/Manager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/sendings/Response.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/sendings/Response.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/src/main/java/logic/FileDevice.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/logic/FileDevice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/ArgumentReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/ArgumentReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/NoReadableArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/NoReadableArguments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/Readable.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/Readable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/AbstractCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/AbstractCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/ClearCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/ClearCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/CountByWeightCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/CountByWeightCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/ExitCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/ExitCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/FilterByLocationCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/FilterByLocationCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/GreaterLocationCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/GreaterLocationCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/HelpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/HelpCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/HistoryCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/HistoryCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/InfoCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/InfoCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/InsertCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/InsertCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/RemoveGreaterCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/RemoveGreaterCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/RemoveKeyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/RemoveKeyCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/RemoveLowerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/RemoveLowerCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/SaveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/SaveCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/ShowCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/ShowCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/TestCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/TestCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/UpdateIdCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/UpdateIdCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/constants/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/logic/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/logic/CollectionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/logic/CommandBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/logic/CommandBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/logic/JsonHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/logic/JsonHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/sendings/Query.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/sendings/Query.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/main/java/logic/ServerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/logic/ServerService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -116,7 +123,7 @@
     </configuration>
     <configuration name="CommandBuilder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="logic.CommandBuilder" />
-      <module name="General" />
+      <module name="Server" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="logic.*" />
@@ -162,8 +169,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ClientService" />
         <item itemvalue="Application.ServerService" />
+        <item itemvalue="Application.ClientService" />
         <item itemvalue="Application.CommandBuilder" />
         <item itemvalue="Application.Launcher" />
         <item itemvalue="Application.Test" />
@@ -205,7 +212,9 @@
       <workItem from="1684909057345" duration="9696000" />
       <workItem from="1685800280123" duration="2800000" />
       <workItem from="1685890189343" duration="9638000" />
-      <workItem from="1685951834190" duration="8141000" />
+      <workItem from="1685951834190" duration="8375000" />
+      <workItem from="1686030268646" duration="17846000" />
+      <workItem from="1686121398676" duration="11961000" />
     </task>
     <task id="LOCAL-00001" summary="Split into two modules and injected network dependencies">
       <created>1683707809010</created>
@@ -235,7 +244,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685904137333</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Established query-response exchange">
+      <created>1685963793311</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1685963793311</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -257,9 +273,24 @@
     <MESSAGE value="Made server work in non-blocking mode" />
     <MESSAGE value="Updated command arguments container" />
     <MESSAGE value="Replaced abstract ReadableArguments with regular class ArgumentReader and interface Readable for better serializing" />
-    <option name="LAST_COMMIT_MESSAGE" value="Replaced abstract ReadableArguments with regular class ArgumentReader and interface Readable for better serializing" />
+    <MESSAGE value="Established query-response exchange" />
+    <option name="LAST_COMMIT_MESSAGE" value="Established query-response exchange" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Client/src/main/java/logic/ClientService.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Server/src/main/java/logic/ServerService.java</url>
+          <line>52</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="sun.nio.ch.WindowsSelectorImpl" memberName="updateKeys" />

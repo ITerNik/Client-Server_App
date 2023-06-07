@@ -4,6 +4,7 @@ import logic.IODevice;
 
 public class ArgumentReader<T> {
     private T argument;
+
     private Readable<T> reader;
 
     public ArgumentReader() {

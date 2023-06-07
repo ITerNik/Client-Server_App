@@ -3,6 +3,7 @@ package logic;
 import annotations.Builder;
 import constants.Messages;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Scanner;
@@ -44,6 +45,15 @@ public class CliDevice extends IODevice {
             }
         }
         return base;
+    }
+    @Override
+    public boolean hasNext() {
+        try {
+            return (System.in.available() > 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 

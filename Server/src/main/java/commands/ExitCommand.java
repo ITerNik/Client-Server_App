@@ -4,9 +4,11 @@ import arguments.ArgumentReader;
 import arguments.NoReadableArguments;
 import constants.Messages;
 import exceptions.CloseConnectionSignal;
+import logic.Manager;
 
 public class ExitCommand extends AbstractCommand {
-    public ExitCommand() {
+    public ExitCommand(Manager manager) {
+        super(manager);
     }
 
     {
@@ -15,6 +17,7 @@ public class ExitCommand extends AbstractCommand {
 
     @Override
     public void execute() {
+        new SaveCommand(manager).execute();
         throw new CloseConnectionSignal("Соединение закрыто");
     }
 

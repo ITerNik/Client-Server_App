@@ -11,6 +11,7 @@ import java.util.*;
 public class CommandBuilder {
     private final HashMap<String, Command> clientCommandList = new HashMap<>(),
     serverCommandList = new HashMap<>();
+
     private final HashMap<String, ArgumentReader<?>> commandInfo = new HashMap<>();
     private ArrayList<String> fileLog;
     private final Queue<Command> commandLog = new ArrayDeque<>() {
@@ -42,14 +43,14 @@ public class CommandBuilder {
     }
 
     private void initialize() {
-        addCommand(new ExitCommand(), new ClearCommand(), new TestCommand(),
+        addCommand(new ExitCommand(manager), new ClearCommand(), new TestCommand(),
                 new InfoCommand(manager), new ShowCommand(manager), new InsertCommand(manager),
                 new RemoveKeyCommand(manager), new UpdateIdCommand(),
                 new RemoveLowerCommand(manager), new HistoryCommand(commandLog, manager), new RemoveGreaterCommand(manager),
                 new HelpCommand(clientCommandList, manager), new CountByWeightCommand(manager), new GreaterLocationCommand(manager),
-                new FilterByLocationCommand(manager));
+                new FilterByLocationCommand(manager), new ExecuteScriptCommand(manager, commandInfo));
         serverCommandList.put("save", new SaveCommand(manager));
-        serverCommandList.put("exit", new ExitCommand());
+        serverCommandList.put("exit", new ExitCommand(manager));
     }
 
     public Command build(Query query) {

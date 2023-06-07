@@ -2,6 +2,7 @@ package logic;
 
 
 import arguments.ArgumentReader;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import commands.Command;
 import constants.Constants;
@@ -24,7 +25,7 @@ public class ServerService implements Service {
     private Selector selector;
     private final CommandBuilder builder;
 
-    private Scanner input = new Scanner(System.in);
+    private final Scanner input = new Scanner(System.in);
 
     private final ObjectMapper mapper = new ObjectMapper();
     private Manager manager;
@@ -44,7 +45,7 @@ public class ServerService implements Service {
             selector = Selector.open();
             ssChannel.register(selector, SelectionKey.OP_ACCEPT);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -64,7 +65,7 @@ public class ServerService implements Service {
         }
         byte[] queryBytes = out.toByteArray();
 
-        Query query = mapper.readValue(queryBytes, Query.class);
+        Query query = mapper.readValue(queryBytes, new TypeReference<>() {});
         System.out.println("Received");
         Response response = handleQuery(query);
 

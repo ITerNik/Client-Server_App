@@ -2,8 +2,7 @@ package sendings;
 
 import arguments.ArgumentReader;
 
-import java.io.Serializable;
-public class Query implements Serializable {
+public class Query {
     public Query(String commandName, ArgumentReader<?> arguments) {
         this.commandName = commandName;
         this.arguments = arguments;

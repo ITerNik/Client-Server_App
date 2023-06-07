@@ -9,7 +9,7 @@ public class NoReadableArguments implements Readable<String> {
 
     @Override
     public String read(IODevice io) {
-        if (!io.readLine().isBlank())
+        if (io.hasNext() && !io.readLine().isBlank())
             throw new BadParametersException(
                     Messages.getMessage("warning.needless_argument"));
         return "";
