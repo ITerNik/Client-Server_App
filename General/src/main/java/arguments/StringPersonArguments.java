@@ -13,7 +13,9 @@ public class StringPersonArguments implements Readable {
     }
     @Override
     public String read(IODevice io) throws JsonProcessingException {
-        Entry<String, Person> entry = new SimpleEntry<>(io.read(), io.readElement(Person.class));
+        String input = io.read();
+        io.readLine();
+        Entry<String, Person> entry = new SimpleEntry<>(input, io.readElement(Person.class));
         return mapper.writerFor(new TypeReference<Entry<String, Person>>() {}).writeValueAsString(entry);
     }
 }

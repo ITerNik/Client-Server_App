@@ -9,12 +9,24 @@ import java.lang.reflect.Method;
 import java.util.Scanner;
 import java.util.TreeSet;
 
+/**
+ * Класс представляет устройство командной строки для ввода и вывода данных,
+ * и считывания аргументов команд
+ */
 public class CliDevice extends IODevice {
 
     public CliDevice() {
         super(new Scanner(System.in));
     }
 
+    /**
+     * Считывает элемент указанного класса из командной строки,
+     * построчно заполняя помоченные аннотацией {@link Builder} поля объекта
+     * при помощи рефлексии
+     *
+     * @param cl класс элемента, который требуется считать
+     * @return считанный элемент указанного класса
+     */
     @Override
     public <T> T readElement(Class<T> cl) {
         T base = null;
@@ -46,6 +58,12 @@ public class CliDevice extends IODevice {
         }
         return base;
     }
+
+    /**
+     * Проверяет наличие следующих данных для ввода в неблокирующем режиме
+     *
+     * @return true, если есть доступные данные для ввода; в противном случае - false
+     */
     @Override
     public boolean hasNext() {
         try {
@@ -56,7 +74,13 @@ public class CliDevice extends IODevice {
         }
     }
 
-
+    /**
+     * Возвращает строку, которая будет выведена на экран для запроса значения
+     * поля с использованием аннотации {@link Builder}, в которой указаны необходимые параметры
+     *
+     * @param annotation аннотация Builder для поля
+     * @return строка запроса для ввода значения поля
+     */
     private String getQuery(Builder annotation) {
         StringBuilder query = new StringBuilder(Messages.getMessage("input.format.parameter", Messages.getMessage(annotation.field())));
         if (annotation.variants().length != 0) {

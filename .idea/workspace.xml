@@ -4,16 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="031b67b1-f434-4a75-9209-ee7f7ccc700c" name="Changes" comment="Revived ExecuteScriptCommand">
+    <list default="true" id="031b67b1-f434-4a75-9209-ee7f7ccc700c" name="Changes" comment="Replaced regular collection manipulations with Stream API filtration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/src/main/java/logic/CliDevice.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/logic/CliDevice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/src/main/java/logic/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/logic/ClientService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/constants/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/logic/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/logic/Manager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/annotations/Builder.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/annotations/Builder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/ArgumentReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/ArgumentReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/FileArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/FileArguments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/IntegerPersonArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/IntegerPersonArguments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/StringPersonArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/StringPersonArguments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/exceptions/NonUniqueIdException.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/exceptions/NonUniqueIdException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/exceptions/StartingProblemException.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/exceptions/StartingProblemException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/logic/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/logic/Manager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/General/src/main/resources/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/resources/messages.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/ExecuteScriptCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/ExecuteScriptCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/RemoveKeyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/RemoveKeyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/UpdateIdCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/UpdateIdCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/src/main/java/logic/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/logic/CollectionManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/main/java/logic/ServerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/logic/ServerService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -83,7 +87,7 @@
       <recent name="C:\Users\terni\IdeaProjects\Client-Server App\Server" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ClientService">
+  <component name="RunManager" selected="Application.ServerService">
     <configuration name="ClientService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="logic.ClientService" />
       <module name="Client" />
@@ -194,7 +198,7 @@
       <workItem from="1686171137920" duration="6619000" />
       <workItem from="1686179703954" duration="4278000" />
       <workItem from="1686187442784" duration="1182000" />
-      <workItem from="1686189561683" duration="7936000" />
+      <workItem from="1686189561683" duration="18083000" />
     </task>
     <task id="LOCAL-00001" summary="Split into two modules and injected network dependencies">
       <created>1683707809010</created>
@@ -245,7 +249,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686194357687</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Replaced regular collection manipulations with Stream API filtration">
+      <created>1686198736363</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1686198736363</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,7 +281,8 @@
     <MESSAGE value="Established query-response exchange" />
     <MESSAGE value="Added temporarily server unavailability handling" />
     <MESSAGE value="Revived ExecuteScriptCommand" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revived ExecuteScriptCommand" />
+    <MESSAGE value="Replaced regular collection manipulations with Stream API filtration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Replaced regular collection manipulations with Stream API filtration" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

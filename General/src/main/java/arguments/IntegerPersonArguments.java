@@ -20,6 +20,7 @@ public class IntegerPersonArguments implements Readable {
             throw new BadParametersException(Messages.getMessage("warning.format.not_integer",
                     Messages.getMessage("parameter.id")));
         }
+        from.readLine();
         Entry<Integer, Person> entry = new SimpleEntry<>(input, from.readElement(Person.class));
         return mapper.writerFor(new TypeReference<Entry<Integer, Person>>() {}).writeValueAsString(entry);
     }

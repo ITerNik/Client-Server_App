@@ -16,7 +16,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Класс представляет считыватель аргументов из файла
+ * преимущественно для команды ExecuteScript
+ */
 public class FileArguments implements Readable {
+    /**
+     * Поле для считывания аргументов остальных команд.
+     * Не сериализуется, т.к. вызывает рекурсию
+     */
     @JsonIgnore
     private HashMap<String, ArgumentReader> commandInfo = new HashMap<>();
 
@@ -27,9 +35,19 @@ public class FileArguments implements Readable {
         this.commandInfo = commandInfo;
     }
 
+    /**
+     * Считывает название файла и проверяет его наличие в системе.
+     * Рекурсивно считывает команды с их аргументами внутри файла
+     * и сериализует их в список JSON строк.
+     * Требует десериализации на сервере
+     *
+     * @param from - устройство ввода-вывода для считывания команды и аргументов
+     * @return сериализованная JSON строка - список команд для исполнения
+     * @throws JsonProcessingException если возникла ошибка при сериализации
+     */
     @Override
     public String read(IODevice from) throws JsonProcessingException {
-        Path file = Paths.get(from.read()); //TODO: Check if files are cyclic
+        Path file = Paths.get(from.read());
         ArrayList<String> commands = new ArrayList<>();
         if (Files.notExists(file)) throw new BadParametersException(
                 Messages.getMessage("warning.format.file_not_found", file.getFileName()));
@@ -45,9 +63,16 @@ public class FileArguments implements Readable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return mapper.writerFor(new TypeReference<ArrayList<String>>() {}).writeValueAsString(commands);
+        return mapper.writerFor(new TypeReference<ArrayList<String>>() {
+        }).writeValueAsString(commands);
     }
 
+    /**
+     * Устанавливает информацию о необходимых аргументах команды.
+     * Необходима для избежания рекурсии при попытке сериализовать список аргументов
+     *
+     * @param commandInfo информация об аргументах, переданная со стороны сервера
+     */
     public void setCommandInfo(HashMap<String, ArgumentReader> commandInfo) {
         this.commandInfo = commandInfo;
     }

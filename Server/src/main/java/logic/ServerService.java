@@ -83,7 +83,7 @@ public class ServerService implements Service {
         ByteBuffer responseBytes = ByteBuffer.wrap(mapper.writeValueAsBytes(response));
         client.write(responseBytes);
 
-        System.out.println("Response sent");
+        System.out.println("Response sent"); //TODO: localize messages
         key.interestOps(SelectionKey.OP_READ);
     }
 
@@ -94,7 +94,7 @@ public class ServerService implements Service {
         ByteBuffer buffer = ByteBuffer.wrap(mapBytes);
         client.write(buffer);
 
-        System.out.println("Info sent");
+        System.out.println(Messages.getMessage("message.format.new_connection", client.getRemoteAddress()));
         key.interestOps(SelectionKey.OP_READ);
     }
 

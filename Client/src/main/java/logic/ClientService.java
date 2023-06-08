@@ -7,7 +7,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import constants.Constants;
 import constants.Messages;
-import exceptions.*;
+import exceptions.BadConnectionException;
+import exceptions.BadParametersException;
 import sendings.Query;
 import sendings.Response;
 
@@ -16,6 +17,9 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.*;
 
+/**
+ * Класс представляет сервис клиента для взаимодействия с сервером
+ */
 public class ClientService implements Service {
     private final CliDevice cio;
     private InputStream inputStream;
@@ -33,6 +37,13 @@ public class ClientService implements Service {
         initConnection();
     }
 
+    /**
+     * Отправляет запрос на сервер и получает ответ, который выводится в консоль.
+     * Необходимые аргументы для команды берутся из списка {@link this#commandInfo}
+     * и читаются с помощью устройства ввода/вывода перед созданием запроса
+     *
+     * @throws BadConnectionException если не удается установить соединение с сервером
+     */
     public void sendQuery() throws BadConnectionException {
         while (true) {
             cio.write(Messages.getMessage("input.command"));
@@ -62,16 +73,24 @@ public class ClientService implements Service {
         }
     }
 
+    /**
+     * Запускает клиентский сервис
+     */
     public void run() {
         try {
             sendQuery();
         } catch (BadConnectionException e) {
             System.out.println(e.getMessage());
+        } catch (NoSuchElementException ignore) {
         } finally {
             closeConnection();
         }
     }
 
+    /**
+     * Закрывает соединение с сервером после выхода из программы
+     * или при неудачной попытке соединения
+     */
     public void closeConnection() {
         try {
             inputStream.close();
@@ -82,6 +101,16 @@ public class ClientService implements Service {
         }
     }
 
+    /**
+     * Инициализирует соединение с сервером. Повторяет процесс 3 раза
+     * с перерывом в 5 секунд в случае неудачи до момента повторного
+     * или окончательного разрыва соединения.
+     * При установке соединения сервер передает на сторону клиента список
+     * аргументов {@link this#commandInfo} с функциями чтения и валидации
+     * необходимых для функционирования команд данных
+     *
+     * @throws BadConnectionException если сервер не отвечает
+     */
     public void initConnection() throws BadConnectionException {
         int retry = 1;
         for (; retry <= Constants.MAX_RETRY; retry++) {
@@ -113,6 +142,9 @@ public class ClientService implements Service {
         cio.write(Messages.getMessage("message.welcome"));
     }
 
+    /**
+     * Точка начала работы клиентского приложения
+     */
     public static void main(String[] args) {
         try (CliDevice cio = new CliDevice()) {
             ClientService client = new ClientService(cio);
