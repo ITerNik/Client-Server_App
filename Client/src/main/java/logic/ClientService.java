@@ -35,6 +35,7 @@ public class ClientService implements Service {
 
     public void sendQuery() throws BadConnectionException {
         while (true) {
+            cio.write(Messages.getMessage("input.command"));
             String commandName = cio.read();
             if (commandName.equals("exit")) break;
             if (!commandInfo.containsKey(commandName)) {
@@ -48,7 +49,6 @@ public class ClientService implements Service {
                 Query query = new Query(commandName, arguments);
                 outputStream.write(mapper.writeValueAsBytes(query));
                 outputStream.flush();
-                System.out.println("Отправлено на сервер");
 
                 Response response = mapper.readValue(inputStream, Response.class);
                 System.out.println(response.getReport());
@@ -76,7 +76,7 @@ public class ClientService implements Service {
         try {
             inputStream.close();
             outputStream.close();
-            System.out.println("Соединение с сервером закрыто");
+            System.out.println(Messages.getMessage("message.connection_closed"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -96,7 +96,7 @@ public class ClientService implements Service {
                 }
                 break;
             } catch (SocketException e) {
-                System.out.println("Ожидание соединения с сервером...");
+                System.out.println(Messages.getMessage("message.connection_waiting"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -108,8 +108,9 @@ public class ClientService implements Service {
         }
 
         if (retry > Constants.MAX_RETRY) {
-            throw new BadConnectionException("Сервер временно недоступен");
+            throw new BadConnectionException(Messages.getMessage("message.server_unavailable"));
         }
+        cio.write(Messages.getMessage("message.welcome"));
     }
 
     public static void main(String[] args) {

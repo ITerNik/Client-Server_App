@@ -33,12 +33,9 @@ public class UpdateIdCommand extends AbstractCommand {
         try {
             Entry<Integer, Person> entry = mapper.readValue(reader.getArgument(), new TypeReference<Entry<Integer, Person>>() {});
             id = entry.getKey();
-            ArrayList<String> keys = manager.findById(id);
-            for (String key : keys) {
-                manager.update(key, entry.getValue());
-            }
+            manager.update(manager.findById(id), entry.getValue());
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //TODO catch BadParameterException
         }
     }
 

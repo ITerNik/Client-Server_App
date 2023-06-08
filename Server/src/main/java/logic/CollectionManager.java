@@ -12,15 +12,14 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class CollectionManager implements Manager {
     private final Hashtable<String, Person> collection;
-    private JsonHandler handler;
+    private final JsonHandler handler;
     private final DependentSet<Integer> uniqueSet = new DependentSet<>();
     private final LocalDateTime date;
 
@@ -39,7 +38,7 @@ public class CollectionManager implements Manager {
         }
     }
 
-    public class DependentSet<T extends Comparable<T>> implements Serializable {
+    public static class DependentSet<T extends Comparable<T>> implements Serializable {
         private final TreeSet<T> unique = new TreeSet<>();
 
         public boolean add(T value) {
@@ -60,13 +59,10 @@ public class CollectionManager implements Manager {
     }
 
     private ArrayList<String> getKeyIf(Predicate<? super String> filter) {
-        ArrayList<String> selected = new ArrayList<>();
-        for (String currKey : collection.keySet()) {
-            if (filter.test(currKey)) {
-                selected.add(currKey);
-            }
-        }
-        return selected;
+        return collection.keySet()
+                .stream()
+                .filter(filter)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void put(String key, Person person) {
@@ -98,48 +94,56 @@ public class CollectionManager implements Manager {
         collection.clear();
         uniqueSet.clear();
     }
+
     public void save() throws IOException {
         handler.clear();
         handler.writeData(collection);
     }
 
     public int countByWeight(double weight) {
-        return getKeyIf(currKey -> Double.compare(collection.get(currKey).getWeight(), weight) == 0).size();
+        return (int) collection.values().stream()
+                .filter(person -> Double.compare(person.getWeight(), weight) == 0)
+                .count();
     }
 
-    public ArrayList<String> findById(int id) {
-        ArrayList<String> selected = getKeyIf(currKey -> collection.get(currKey).getId() == id);
-        if (!selected.isEmpty()) return selected;
-        else
+    public String findById(int id) {
+        try {
+            return collection.entrySet().stream()
+                    .filter(entry -> entry.getValue().getId() == id)
+                    .findFirst().get().getKey();
+        } catch (NoSuchElementException e) {
             throw new BadParametersException(Messages.getMessage("warning.format.no_such_element", Messages.getMessage("parameter.id")));
+        }
     }
 
     public int countGreaterThanLocation(Location location) {
-        return getKeyIf(currKey -> {
-            Location curr = collection.get(currKey).getLocation();
-            return curr != null && curr.compareTo(location) > 0;
-        }).size();
+        return (int) collection.values().stream()
+                .filter(person -> {
+                    Location curr = person.getLocation();
+                    return curr != null && curr.compareTo(location) > 0;
+                })
+                .count();
     }
 
     public ArrayList<Person> filterByLocation(Location location) {
-        ArrayList<String> selected = getKeyIf(currKey -> {
-            Location curr = collection.get(currKey).getLocation();
-            return curr != null && curr.equals(location);
-        });
-        ArrayList<Person> res = new ArrayList<>();
+        ArrayList<Person> selected = collection.values().stream()
+                .filter(person -> {
+                    Location curr = person.getLocation();
+                    return curr != null && curr.equals(location);
+                })
+                .collect(Collectors.toCollection(ArrayList::new));
         if (selected.isEmpty())
             throw new IllegalArgumentException(Messages.getMessage("warning.format.no_such_element", Messages.getMessage("parameter.location")));
         else {
-            for (String key : selected) {
-                res.add(collection.get(key));
-            }
-            return res;
+            return selected;
         }
     }
 
 
     public ArrayList<String> removeGreater(String key) {
-        ArrayList<String> removed = getKeyIf(currKey -> currKey.compareTo(key) > 0);
+        ArrayList<String> removed = collection.keySet().stream()
+                .filter(curr -> curr.compareTo(key) > 0)
+                .collect(Collectors.toCollection(ArrayList::new));
         for (String currKey : removed) {
             uniqueSet.remove(collection.get(currKey).getId());
             collection.remove(currKey);
@@ -148,16 +152,15 @@ public class CollectionManager implements Manager {
     }
 
     public ArrayList<String> removeLower(Person element) {
-        ArrayList<String> removed = getKeyIf(currKey -> collection.get(currKey).compareTo(element) < 0);
+        ArrayList<String> removed = collection.entrySet().stream()
+                .filter(entry -> entry.getValue().compareTo(element) < 0)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toCollection(ArrayList::new));
         for (String currKey : removed) {
             uniqueSet.remove(collection.get(currKey).getId());
             collection.remove(currKey);
         }
         return removed;
-    }
-
-    public Hashtable<String, Person> getCollection() {
-        return collection;
     }
 
     public String getInfo() {

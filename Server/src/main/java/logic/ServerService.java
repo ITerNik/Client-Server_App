@@ -26,10 +26,9 @@ public class ServerService implements Service {
     private final Scanner input = new Scanner(System.in);
 
     private final ObjectMapper mapper = new ObjectMapper();
-    private Manager manager;
 
     public ServerService(String fileName) throws StartingProblemException, NonUniqueIdException {
-        this.manager = new CollectionManager(fileName);
+        Manager manager = new CollectionManager(fileName);
         this.builder = new CommandBuilder(manager);
         initConnection();
     }
@@ -108,7 +107,7 @@ public class ServerService implements Service {
     }
 
     private void closeConnection() {
-        System.out.println("Соединение закрыто");
+        System.out.println(Messages.getMessage("message.server_stopped"));
         if (selector != null) {
             try {
                 selector.close();
@@ -162,7 +161,7 @@ public class ServerService implements Service {
 
     public static void main(String[] args) {
         try {
-            Service service = new ServerService(".\\Server\\src\\main\\resources\\repository.json");
+            Service service = new ServerService(Constants.FILE_PATH);
             service.run();
         } catch (StartingProblemException | NonUniqueIdException e) {
             System.out.println(e.getMessage());

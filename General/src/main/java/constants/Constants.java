@@ -5,6 +5,7 @@ public abstract class Constants {
     public static final String SPLITTER = "\\s+";
     public static final long TIMEOUT = 1000;
     public static final int BUFFER_SIZE = 1024;
+    public static final String FILE_PATH = ".\\Server\\src\\main\\resources\\repository.json";
     // Connection
     public static final int PORT = 9999;
     public static final String CLIENT_HOST = "127.0.0.1";

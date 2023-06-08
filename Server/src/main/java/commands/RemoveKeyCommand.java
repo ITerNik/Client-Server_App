@@ -19,7 +19,7 @@ public class RemoveKeyCommand extends AbstractCommand {
     @Override
     public void execute() {
         manager.remove(reader.getArgument());
-    }
+    } //TODO: Add existing key exception
 
     @Override
     public String getName() {

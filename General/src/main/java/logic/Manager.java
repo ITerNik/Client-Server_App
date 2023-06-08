@@ -6,7 +6,6 @@ import elements.Person;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 public interface Manager extends Serializable {
     boolean containsKey(String s);
@@ -30,7 +29,7 @@ public interface Manager extends Serializable {
 
     int countGreaterThanLocation(Location readElement);
 
-    ArrayList<String> findById(int id);
+    String findById(int id);
 
     String getInfo();
 

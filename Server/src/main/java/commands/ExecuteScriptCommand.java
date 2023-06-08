@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class ExecuteScriptCommand extends AbstractCommand { //TODO: Fix deserialization error
+public class ExecuteScriptCommand extends AbstractCommand {
 
     private final StringBuilder report = new StringBuilder();
 
@@ -30,8 +30,8 @@ public class ExecuteScriptCommand extends AbstractCommand { //TODO: Fix deserial
             for (String query : queries) {
                 Command current = builder.build(mapper.readValue(query, Query.class));
                 current.execute();
-                // builder.logCommand(current);
-                report.append(String.format("Результат команды %s:%n", current.getName()))
+                builder.logCommand(current);
+                report.append(String.format(Messages.getMessage("message.format.execute_result") + "\n", current.getName()))
                         .append(current.getReport());
             }
         } catch (JsonProcessingException e) {
