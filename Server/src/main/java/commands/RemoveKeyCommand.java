@@ -12,13 +12,13 @@ public class RemoveKeyCommand extends AbstractCommand {
         super(manager);
     }
     {
-        reader = new ArgumentReader<>(new KeyArguments());
+        reader = new ArgumentReader(new KeyArguments());
     }
 
 
     @Override
     public void execute() {
-        manager.remove((String) reader.getArgument());
+        manager.remove(reader.getArgument());
     }
 
     @Override

@@ -1,28 +1,34 @@
 package arguments;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import logic.IODevice;
 
-public class ArgumentReader<T> {
-    private T argument;
+public class ArgumentReader {
+    private String argument;
 
-    private Readable<T> reader;
+    private Readable reader;
 
     public ArgumentReader() {
     }
 
-    public ArgumentReader(Readable<T> reader) {
+    public ArgumentReader(Readable reader) {
         this.reader = reader;
     }
 
     public void read(IODevice io) {
-        argument = reader.read(io);
+        try {
+            argument = reader.read(io);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
     }
 
-    public T getArgument() {
+    public String getArgument() {
         return argument;
     }
 
-    public Readable<T> getReader() {
+    public Readable getReader() {
         return reader;
     }
 }

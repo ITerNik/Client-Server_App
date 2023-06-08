@@ -2,6 +2,8 @@ package arguments;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import logic.IODevice;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.MINIMAL_CLASS)
@@ -15,6 +17,7 @@ import logic.IODevice;
         @JsonSubTypes.Type(value = LocationArguments.class, name = "LocationArguments"),
         @JsonSubTypes.Type(value = FileArguments.class, name = "FileArguments")
 })
-public interface Readable<T> {
-    T read(IODevice from);
+public interface Readable {
+    ObjectMapper mapper = new ObjectMapper();
+    String read(IODevice from) throws JsonProcessingException;
 }

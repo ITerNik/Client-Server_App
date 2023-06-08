@@ -16,12 +16,12 @@ public class CountByWeightCommand extends AbstractCommand {
         super(manager);
     }
     {
-        reader = new ArgumentReader<>(new WeightArguments());
+        reader = new ArgumentReader(new WeightArguments());
     }
 
     @Override
     public void execute() {
-        count = manager.countByWeight((double) reader.getArgument());
+        count = manager.countByWeight(Double.parseDouble(reader.getArgument()));
     }
 
     @Override

@@ -15,12 +15,12 @@ public class RemoveGreaterCommand extends AbstractCommand {
         super(manager);
     }
     {
-        reader = new ArgumentReader<>(new KeyArguments());
+        reader = new ArgumentReader(new KeyArguments());
     }
 
     @Override
     public void execute() {
-        removed = manager.removeGreater((String) reader.getArgument());
+        removed = manager.removeGreater(reader.getArgument());
     }
 
     @Override

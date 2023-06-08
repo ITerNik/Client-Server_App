@@ -2,6 +2,8 @@ package commands;
 
 import arguments.ArgumentReader;
 import arguments.FileArguments;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import logic.CommandBuilder;
 import logic.Manager;
 import constants.Messages;
@@ -15,21 +17,25 @@ public class ExecuteScriptCommand extends AbstractCommand { //TODO: Fix deserial
 
     private final StringBuilder report = new StringBuilder();
 
-    public ExecuteScriptCommand(Manager manager, HashMap<String, ArgumentReader<?>> commandInfo) {
+    public ExecuteScriptCommand(Manager manager, HashMap<String, ArgumentReader> commandInfo) {
         super(manager);
-        reader = new ArgumentReader<>(new FileArguments(commandInfo));
+        reader = new ArgumentReader(new FileArguments(commandInfo));
     }
 
     @Override
     public void execute() {
         CommandBuilder builder = new CommandBuilder(manager);
-        ArrayList<Query> queries = (ArrayList<Query>) reader.getArgument();
-        for (Query query : queries) {
-            Command current = builder.build(query);
-            current.execute();
-            // builder.logCommand(current);
-            report.append(String.format("Результат команды %s:%n", current.getName()))
-                    .append(current.getReport());
+        try {
+            ArrayList<String> queries = mapper.readValue(reader.getArgument(), new TypeReference<ArrayList<String>>() {});
+            for (String query : queries) {
+                Command current = builder.build(mapper.readValue(query, Query.class));
+                current.execute();
+                // builder.logCommand(current);
+                report.append(String.format("Результат команды %s:%n", current.getName()))
+                        .append(current.getReport());
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
     }
 

@@ -18,7 +18,7 @@ public class HistoryCommand extends AbstractCommand {
         this.commandHistory = commandHistory;
     }
     {
-        reader = new ArgumentReader<>(new NoReadableArguments());
+        reader = new ArgumentReader(new NoReadableArguments());
     }
 
     @Override

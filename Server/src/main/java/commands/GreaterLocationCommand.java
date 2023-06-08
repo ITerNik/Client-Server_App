@@ -2,6 +2,7 @@ package commands;
 
 import arguments.ArgumentReader;
 import arguments.LocationArguments;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import constants.Messages;
 import elements.Location;
 import logic.Manager;
@@ -15,12 +16,16 @@ public class GreaterLocationCommand extends AbstractCommand {
         super(manager);
     }
     {
-        reader = new ArgumentReader<>(new LocationArguments());
+        reader = new ArgumentReader(new LocationArguments());
     }
 
     @Override
     public void execute() {
-        count = manager.countGreaterThanLocation((Location) reader.getArgument());
+        try {
+            count = manager.countGreaterThanLocation(mapper.readValue(reader.getArgument(), Location.class));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

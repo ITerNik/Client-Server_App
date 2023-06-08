@@ -12,7 +12,7 @@ public class ClearCommand extends AbstractCommand {
         super(manager);
     }
     {
-        reader = new ArgumentReader<>(new NoReadableArguments());
+        reader = new ArgumentReader(new NoReadableArguments());
     }
     @Override
     public void execute() {

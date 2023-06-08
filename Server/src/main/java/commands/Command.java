@@ -9,8 +9,8 @@ public interface Command extends Serializable {
      * Исполнение команды. Переопределяется в классах наследниках
      */
     void execute();
-    ArgumentReader<?> getReader();
-    Command setArguments(ArgumentReader<?> arguments);
+    ArgumentReader getReader();
+    Command setArguments(ArgumentReader arguments);
 
     /**
      * Возвращает название для добавления в список команд и вывода в help

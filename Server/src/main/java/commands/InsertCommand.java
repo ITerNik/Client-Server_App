@@ -1,15 +1,22 @@
 package commands;
 
-import java.util.AbstractMap.SimpleEntry;
+import java.util.Map.Entry;
 
 import arguments.ArgumentReader;
 import arguments.StringPersonArguments;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import constants.Messages;
 import elements.Person;
 import logic.Manager;
 
 
 public class InsertCommand extends AbstractCommand {
+    @JsonIgnore
+    private String key;
+    @JsonIgnore
+    private Person person;
     public InsertCommand() {
     }
     public InsertCommand(Manager manager) {
@@ -17,13 +24,20 @@ public class InsertCommand extends AbstractCommand {
     }
 
     {
-        reader = new ArgumentReader<>(new StringPersonArguments());
+        reader = new ArgumentReader(new StringPersonArguments());
     }
 
     @Override
     public void execute() {
-        SimpleEntry<String, Person> entry = (SimpleEntry<String, Person>) reader.getArgument();
-        manager.put(entry.getKey(), entry.getValue());
+        try {
+            Entry<String, Person> entry = mapper.readValue(reader.getArgument(), new TypeReference<Entry<String, Person>>() {});
+            key = entry.getKey();
+            person = entry.getValue();
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        manager.put(key, person);
     }
 
     @Override
@@ -33,7 +47,7 @@ public class InsertCommand extends AbstractCommand {
 
     @Override
     public String getReport() {
-        return Messages.getMessage("message.format.added", ((SimpleEntry<?, ?>) reader.getArgument()).getKey());
+        return Messages.getMessage("message.format.added", key);
     }
 
     @Override

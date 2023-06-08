@@ -3,12 +3,12 @@ package arguments;
 import constants.Messages;
 import exceptions.BadParametersException;
 import logic.IODevice;
-public class WeightArguments implements Readable<Double> {
+public class WeightArguments implements Readable {
     public WeightArguments() {
     }
 
     @Override
-    public Double read(IODevice io) {
+    public String read(IODevice io) {
         double input = 0;
         try {
             input = Double.parseDouble(io.read());
@@ -17,6 +17,6 @@ public class WeightArguments implements Readable<Double> {
                     Messages.getMessage("parameter.weight")));
             //TODO: BadParam -> Exception
         }
-        return input;
+        return String.valueOf(input);
     }
 }

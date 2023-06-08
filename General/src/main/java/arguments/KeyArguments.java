@@ -1,7 +1,7 @@
 package arguments;
 
 import logic.IODevice;
-public class KeyArguments implements Readable<String> {
+public class KeyArguments implements Readable {
     public KeyArguments(){
     }
     @Override

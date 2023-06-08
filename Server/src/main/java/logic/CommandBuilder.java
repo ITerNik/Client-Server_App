@@ -12,7 +12,7 @@ public class CommandBuilder {
     private final HashMap<String, Command> clientCommandList = new HashMap<>(),
     serverCommandList = new HashMap<>();
 
-    private final HashMap<String, ArgumentReader<?>> commandInfo = new HashMap<>();
+    private final HashMap<String, ArgumentReader> commandInfo = new HashMap<>();
     private ArrayList<String> fileLog;
     private final Queue<Command> commandLog = new ArrayDeque<>() {
         @Override
@@ -77,7 +77,7 @@ public class CommandBuilder {
         commandLog.add(command);
     }
 
-    public HashMap<String, ArgumentReader<?>> getArguments() {
+    public HashMap<String, ArgumentReader> getArguments() {
         return commandInfo;
     }
 

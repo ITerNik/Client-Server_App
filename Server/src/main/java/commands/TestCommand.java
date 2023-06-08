@@ -14,7 +14,7 @@ public class TestCommand extends AbstractCommand {
         super(manager);
     }
     {
-        reader = new ArgumentReader<>(new NoReadableArguments());
+        reader = new ArgumentReader(new NoReadableArguments());
     }
 
     @Override

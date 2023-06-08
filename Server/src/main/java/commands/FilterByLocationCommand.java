@@ -2,6 +2,7 @@ package commands;
 
 import arguments.ArgumentReader;
 import arguments.LocationArguments;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import constants.Messages;
 import elements.Location;
 import elements.Person;
@@ -18,12 +19,16 @@ public class FilterByLocationCommand extends AbstractCommand {
         super(manager);
     }
     {
-        reader = new ArgumentReader<>(new LocationArguments());
+        reader = new ArgumentReader(new LocationArguments());
     }
 
     @Override
     public void execute() {
-        selected = manager.filterByLocation((Location) reader.getArgument());
+        try {
+            selected = manager.filterByLocation(mapper.readValue(reader.getArgument(), Location.class));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

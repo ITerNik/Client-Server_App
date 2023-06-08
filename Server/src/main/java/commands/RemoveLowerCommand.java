@@ -2,6 +2,7 @@ package commands;
 
 import arguments.ArgumentReader;
 import arguments.PersonArguments;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import constants.Messages;
 import elements.Person;
 import logic.Manager;
@@ -16,12 +17,16 @@ public class RemoveLowerCommand extends AbstractCommand {
         super(manager);
     }
     {
-        reader = new ArgumentReader<>(new PersonArguments());
+        reader = new ArgumentReader(new PersonArguments());
     }
 
     @Override
     public void execute() {
-        removed = manager.removeLower((Person) reader.getArgument());
+        try {
+            removed = manager.removeLower(mapper.readValue(reader.getArgument(), Person.class));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

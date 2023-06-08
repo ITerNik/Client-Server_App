@@ -1,6 +1,7 @@
 package commands;
 
 import arguments.ArgumentReader;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import constants.Messages;
 import logic.Manager;
 
@@ -10,7 +11,8 @@ import logic.Manager;
  * Все команды наследуются от этого класса и переопределяют исполнение в соответствии с требованиями.
  */
 public abstract class AbstractCommand implements Command {
-    protected ArgumentReader<?> reader;
+    protected ArgumentReader reader;
+    protected ObjectMapper mapper = new ObjectMapper();
     protected Manager manager;
 
     public AbstractCommand() {
@@ -20,13 +22,13 @@ public abstract class AbstractCommand implements Command {
     }
 
     @Override
-    public Command setArguments(ArgumentReader<?> reader) {
+    public Command setArguments(ArgumentReader reader) {
         this.reader = reader;
         return this;
     }
 
     @Override
-    public ArgumentReader<?> getReader() {
+    public ArgumentReader getReader() {
         return reader;
     }
 

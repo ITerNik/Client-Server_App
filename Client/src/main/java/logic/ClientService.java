@@ -20,7 +20,7 @@ public class ClientService implements Service {
     private final CliDevice cio;
     private InputStream inputStream;
     private OutputStream outputStream;
-    private HashMap<String, ArgumentReader<?>> commandInfo;
+    private HashMap<String, ArgumentReader> commandInfo;
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -41,7 +41,7 @@ public class ClientService implements Service {
                 System.out.println(Messages.getMessage("warning.format.no_such_command", commandName));
                 continue;
             }
-            ArgumentReader<?> arguments = commandInfo.get(commandName);
+            ArgumentReader arguments = commandInfo.get(commandName);
             try {
                 arguments.read(cio);
 
@@ -92,7 +92,7 @@ public class ClientService implements Service {
 
                 if (commandInfo == null) {
                     commandInfo = mapper.readValue(inputStream, new TypeReference<>() {});
-                    commandInfo.put("execute_script", new ArgumentReader<>(new FileArguments(commandInfo)));
+                    commandInfo.put("execute_script", new ArgumentReader(new FileArguments(commandInfo)));
                 }
                 break;
             } catch (SocketException e) {

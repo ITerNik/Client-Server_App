@@ -4,40 +4,40 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="031b67b1-f434-4a75-9209-ee7f7ccc700c" name="Changes" comment="Established query-response exchange">
-      <change afterPath="$PROJECT_DIR$/General/src/main/java/arguments/FileArguments.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Server/src/main/java/commands/ExecuteScriptCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="031b67b1-f434-4a75-9209-ee7f7ccc700c" name="Changes" comment="Added temporarily server unavailability handling">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/logic/CliDevice.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/logic/CliDevice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/src/main/java/logic/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/logic/ClientService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Client/src/main/java/logic/FileDevice.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/logic/FileDevice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/ArgumentReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/ArgumentReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/FileArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/FileArguments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/IntegerPersonArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/IntegerPersonArguments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/KeyArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/KeyArguments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/LocationArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/LocationArguments.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/NoReadableArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/NoReadableArguments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/PersonArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/PersonArguments.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/Readable.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/Readable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/AbstractCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/AbstractCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/ClearCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/ClearCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/Command.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/CountByWeightCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/CountByWeightCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/ExitCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/ExitCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/FilterByLocationCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/FilterByLocationCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/GreaterLocationCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/GreaterLocationCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/HelpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/HelpCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/HistoryCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/HistoryCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/InfoCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/InfoCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/InsertCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/InsertCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/RemoveGreaterCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/RemoveGreaterCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/RemoveKeyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/RemoveKeyCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/RemoveLowerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/RemoveLowerCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/SaveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/SaveCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/ShowCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/ShowCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/TestCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/TestCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/commands/UpdateIdCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/UpdateIdCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/constants/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/constants/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/logic/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/logic/CollectionManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/logic/CommandBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/logic/CommandBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/General/src/main/java/logic/JsonHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/logic/JsonHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/StringPersonArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/StringPersonArguments.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/General/src/main/java/arguments/WeightArguments.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/arguments/WeightArguments.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/General/src/main/java/sendings/Query.java" beforeDir="false" afterPath="$PROJECT_DIR$/General/src/main/java/sendings/Query.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/AbstractCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/AbstractCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/ClearCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/ClearCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/CountByWeightCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/CountByWeightCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/ExecuteScriptCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/ExecuteScriptCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/ExitCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/ExitCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/FilterByLocationCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/FilterByLocationCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/GreaterLocationCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/GreaterLocationCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/HelpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/HelpCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/HistoryCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/HistoryCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/InfoCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/InfoCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/InsertCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/InsertCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/RemoveGreaterCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/RemoveGreaterCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/RemoveKeyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/RemoveKeyCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/RemoveLowerCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/RemoveLowerCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/SaveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/SaveCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/ShowCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/ShowCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/TestCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/TestCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/commands/UpdateIdCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/commands/UpdateIdCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Server/src/main/java/logic/CommandBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/logic/CommandBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server/src/main/java/logic/ServerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Server/src/main/java/logic/ServerService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -62,7 +62,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectId" id="2PWbpGWBxOQMJBlMxY1Y5yMxkSA" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -83,11 +83,11 @@
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-11&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/terni/IdeaProjects/New&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -100,14 +100,14 @@
       <recent name="C:\Users\terni\IdeaProjects\Client-Server App\client" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\terni\IdeaProjects\Client-Server App\Server\src\main\java" />
       <recent name="C:\Users\terni\IdeaProjects\Client-Server App\Server\src\main\resources" />
       <recent name="C:\Users\terni\IdeaProjects\Client-Server App\Server\src\main\java\logic" />
       <recent name="C:\Users\terni\IdeaProjects\Client-Server App\Server\src\main\java\repository" />
       <recent name="C:\Users\terni\IdeaProjects\Client-Server App\Server" />
-      <recent name="C:\Users\terni\IdeaProjects\Client-Server App\General\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ServerService">
+  <component name="RunManager" selected="Application.ClientService">
     <configuration name="ClientService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="logic.ClientService" />
       <module name="Client" />
@@ -169,8 +169,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ServerService" />
         <item itemvalue="Application.ClientService" />
+        <item itemvalue="Application.ServerService" />
         <item itemvalue="Application.CommandBuilder" />
         <item itemvalue="Application.Launcher" />
         <item itemvalue="Application.Test" />
@@ -214,7 +214,11 @@
       <workItem from="1685890189343" duration="9638000" />
       <workItem from="1685951834190" duration="8375000" />
       <workItem from="1686030268646" duration="17846000" />
-      <workItem from="1686121398676" duration="11961000" />
+      <workItem from="1686121398676" duration="16109000" />
+      <workItem from="1686171137920" duration="6619000" />
+      <workItem from="1686179703954" duration="4278000" />
+      <workItem from="1686187442784" duration="1182000" />
+      <workItem from="1686189561683" duration="3533000" />
     </task>
     <task id="LOCAL-00001" summary="Split into two modules and injected network dependencies">
       <created>1683707809010</created>
@@ -251,7 +255,14 @@
       <option name="project" value="LOCAL" />
       <updated>1685963793311</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added temporarily server unavailability handling">
+      <created>1686134880503</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1686134880504</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -274,20 +285,16 @@
     <MESSAGE value="Updated command arguments container" />
     <MESSAGE value="Replaced abstract ReadableArguments with regular class ArgumentReader and interface Readable for better serializing" />
     <MESSAGE value="Established query-response exchange" />
-    <option name="LAST_COMMIT_MESSAGE" value="Established query-response exchange" />
+    <MESSAGE value="Added temporarily server unavailability handling" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added temporarily server unavailability handling" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Client/src/main/java/logic/ClientService.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Server/src/main/java/logic/ServerService.java</url>
-          <line>52</line>
-          <option name="timeStamp" value="7" />
+          <line>51</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

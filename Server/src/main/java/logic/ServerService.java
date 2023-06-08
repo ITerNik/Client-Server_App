@@ -1,8 +1,6 @@
 package logic;
 
 
-import arguments.ArgumentReader;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import commands.Command;
 import constants.Constants;
@@ -65,7 +63,7 @@ public class ServerService implements Service {
         }
         byte[] queryBytes = out.toByteArray();
 
-        Query query = mapper.readValue(queryBytes, new TypeReference<>() {});
+        Query query = mapper.readValue(queryBytes, Query.class);
         System.out.println("Received");
         Response response = handleQuery(query);
 
@@ -92,8 +90,7 @@ public class ServerService implements Service {
 
     private void sendInfo(SelectionKey key) throws IOException {
         SocketChannel client = (SocketChannel) key.channel();
-        Map<String, ArgumentReader<?>> argumentsInfo = (Map<String, ArgumentReader<?>>) key.attachment();
-        byte[] mapBytes = mapper.writeValueAsBytes(argumentsInfo);
+        byte[] mapBytes = mapper.writeValueAsBytes(builder.getArguments());
 
         ByteBuffer buffer = ByteBuffer.wrap(mapBytes);
         client.write(buffer);
@@ -107,7 +104,7 @@ public class ServerService implements Service {
         SocketChannel clientChannel = serverChannel.accept();
         clientChannel.configureBlocking(false);
 
-        clientChannel.register(selector, SelectionKey.OP_WRITE, builder.getArguments());
+        clientChannel.register(selector, SelectionKey.OP_WRITE);
     }
 
     private void closeConnection() {
@@ -137,8 +134,8 @@ public class ServerService implements Service {
                     if (key.isAcceptable()) acceptConnection(key);
                     if (key.isReadable()) getQuery(key);
                     if (key.isWritable()) {
-                        if (key.attachment() instanceof HashMap) sendInfo(key);
-                        else sendResponse(key);
+                        if (key.attachment() instanceof Response) sendResponse(key);
+                        else sendInfo(key);
                     }
                 }
             }

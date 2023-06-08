@@ -12,7 +12,7 @@ public class ExitCommand extends AbstractCommand {
     }
 
     {
-        reader = new ArgumentReader<>(new NoReadableArguments());
+        reader = new ArgumentReader(new NoReadableArguments());
     }
 
     @Override

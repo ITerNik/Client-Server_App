@@ -3,7 +3,7 @@ package arguments;
 import constants.Messages;
 import exceptions.BadParametersException;
 import logic.IODevice;
-public class NoReadableArguments implements Readable<String> {
+public class NoReadableArguments implements Readable {
     public NoReadableArguments() {
     }
 

@@ -11,7 +11,7 @@ public class ShowCommand extends AbstractCommand {
     }
 
     {
-        reader = new ArgumentReader<>(new NoReadableArguments());
+        reader = new ArgumentReader(new NoReadableArguments());
     }
 
     public ShowCommand(Manager manager) {

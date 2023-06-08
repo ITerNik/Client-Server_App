@@ -18,7 +18,7 @@ public class HelpCommand extends AbstractCommand {
         this.commandList = commandList;
     }
     {
-        reader = new ArgumentReader<>(new NoReadableArguments());
+        reader = new ArgumentReader(new NoReadableArguments());
     }
 
     @Override
